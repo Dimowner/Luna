@@ -2,4 +2,14 @@
     <string name="app_name">Luna</string>
 
     <string name="action_settings">Settings</string>
+
+    <string name="placeTv">Place</string>
+    <string name="temperatureTv">--</string>
+    <string name="minusSymbolTv">-</string>
+    <string name="degreeSymbolTv">°</string>
+    <string name="humidityHeaderTv">HUMIDITY</string>
+    <string name="humidityValueTv">---</string>
+    <string name="pressureHeaderTv">PRESSURE</string>
+    <string name="pressureValueTv">---</string>
+    <string name="weatherSummaryTv">Weather Summary</string>
 </resources>

@@ -36,7 +36,7 @@
         android:layout_marginTop="64dp"
         android:textSize="20sp"
         android:textColor="@android:color/primary_text_dark"
-        android:text="Place"/>
+        android:text="@string/placeTv"/>
 
     <TextView
         android:id="@+id/temperatureTv"
@@ -46,7 +46,7 @@
         android:layout_centerVertical="true"
         android:textSize="100sp"
         android:textColor="@android:color/primary_text_dark"
-        android:text="--"/>
+        android:text="@string/temperatureTv"/>
 
     <TextView
         android:id="@+id/minusSymbolTv"
@@ -57,7 +57,7 @@
         android:paddingRight="5dp"
         android:textSize="100sp"
         android:textColor="@android:color/primary_text_dark"
-        android:text="-"/>
+        android:text="@string/minusSymbolTv"/>
 
     <TextView
         android:id="@+id/degreeSymbolTv"
@@ -67,7 +67,7 @@
         android:layout_alignTop="@id/temperatureTv"
         android:textSize="100sp"
         android:textColor="@android:color/primary_text_dark"
-        android:text="\u00B0"/>
+        android:text="@string/degreeSymbolTv"/>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -92,7 +92,7 @@
                 android:gravity="center_horizontal"
                 android:textSize="16sp"
                 android:textColor="#80ffffff"
-                android:text="HUMIDITY"/>
+                android:text="@string/humidityHeaderTv"/>
 
             <TextView
                 android:id="@+id/humidityValueTv"
@@ -102,7 +102,7 @@
                 android:paddingTop="4dp"
                 android:textSize="16sp"
                 android:textColor="@android:color/primary_text_dark"
-                android:text="---"/>
+                android:text="@string/humidityValueTv"/>
 
         </LinearLayout>
 
@@ -119,7 +119,7 @@
                 android:gravity="center_horizontal"
                 android:textSize="16sp"
                 android:textColor="#80ffffff"
-                android:text="PRESSURE"/>
+                android:text="@string/pressureHeaderTv"/>
 
             <TextView
                 android:id="@+id/pressureValueTv"
@@ -129,7 +129,7 @@
                 android:paddingTop="4dp"
                 android:textSize="16sp"
                 android:textColor="@android:color/primary_text_dark"
-                android:text="---"/>
+                android:text="@string/pressureValueTv"/>
 
         </LinearLayout>
 
@@ -143,6 +143,6 @@
         android:layout_alignParentBottom="true"
         android:textSize="20sp"
         android:textColor="@android:color/primary_text_dark"
-        android:text="Weather Summary"/>
+        android:text="@string/weatherSummaryTv"/>
 
 </RelativeLayout>
