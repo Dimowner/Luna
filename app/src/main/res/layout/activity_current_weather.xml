@@ -68,4 +68,81 @@
         android:textSize="100sp"
         android:textColor="@android:color/primary_text_dark"
         android:text="\u00B0"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/temperatureTv"
+        android:paddingTop="32dp"
+        android:baselineAligned="false"
+        android:weightSum="100">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="50">
+
+            <TextView
+                android:id="@+id/humidityHeaderTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:textSize="16sp"
+                android:textColor="#80ffffff"
+                android:text="HUMIDITY"/>
+
+            <TextView
+                android:id="@+id/humidityValueTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:paddingTop="4dp"
+                android:textSize="16sp"
+                android:textColor="@android:color/primary_text_dark"
+                android:text="---"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="50">
+
+            <TextView
+                android:id="@+id/pressureHeaderTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:textSize="16sp"
+                android:textColor="#80ffffff"
+                android:text="PRESSURE"/>
+
+            <TextView
+                android:id="@+id/pressureValueTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:paddingTop="4dp"
+                android:textSize="16sp"
+                android:textColor="@android:color/primary_text_dark"
+                android:text="---"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/weatherSummaryTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:textSize="20sp"
+        android:textColor="@android:color/primary_text_dark"
+        android:text="Weather Summary"/>
+
 </RelativeLayout>
