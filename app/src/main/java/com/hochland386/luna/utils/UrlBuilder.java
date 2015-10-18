@@ -22,9 +22,11 @@ public class UrlBuilder {
                 "http://api.openweathermap.org/data/2.5/weather" +
                         "?lat=%s" +
                         "&lon=%s" +
-                        "&units=metric",
+                        "&units=metric" +
+                        "&appid=%s",
                 latitude,
-                longitude
+                longitude,
+                Constants.API_KEY
         );
     }
 }
