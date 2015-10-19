@@ -1,8 +1,12 @@
 package com.hochland386.luna.ui;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
@@ -27,6 +31,9 @@ import java.util.List;
 
 public class CurrentWeatherActivity extends AppCompatActivity implements LocationWorker.LocationHandler, NetworkWorker.NetworkWorkerHandler {
 
+//    Constants
+    private final int LOCATION_PERMISSIONS_REQUEST_CODE = 0;
+
 //    View's declaration
     private ImageButton refreshIb;
     private ProgressBar refreshPb;
@@ -39,6 +46,10 @@ public class CurrentWeatherActivity extends AppCompatActivity implements Locatio
     private String mLatitudeAsString = String.valueOf(Constants.DEFAULT_LATITUDE);
     private String mLongitudeAsString = String.valueOf(Constants.DEFAULT_LONGITUDE);
     private CurrentWeather mCurrentWeather;
+    private String[] mLocationPermissionsArray = {
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,13 +111,18 @@ public class CurrentWeatherActivity extends AppCompatActivity implements Locatio
         refreshIb.setVisibility(View.VISIBLE);
     }
 
-//    OnClick methods
-    public void onClickRefreshIb(View view) {
+//    Private interface
+    /**
+     * Checks availability of location and network and request location from LocationWorker.
+     * Shows Toast with error if location or network are unavailable.
+     */
+    private void refreshWeather() {
         /* Checks availability of location and network and request location from LocationWorker */
         if (ProvidersChecker.isLocationAndNetworkAvailable(this)) {
             toggleRefreshAnimationOn();
             mLocationWorker.determineUserLocation(this, this);
         } else {
+            /* Shows error Toast if location or network are unavailable */
             Toast.makeText(
                     this,
                     "Location or network are unavailable",
@@ -115,7 +131,47 @@ public class CurrentWeatherActivity extends AppCompatActivity implements Locatio
         }
     }
 
-//    Implements LocationHandler interface
+//    OnClick methods
+    public void onClickRefreshIb(View view) {
+        /* Checks runtime permissions. Request permissions if it's not already granted */
+        if (ContextCompat.checkSelfPermission(this,
+                mLocationPermissionsArray[0])
+                != PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this,
+                mLocationPermissionsArray[1])
+                != PackageManager.PERMISSION_GRANTED) {
+            /* Warning! No permissions at this point of the time. Requesting ... */
+            ActivityCompat.requestPermissions(this,
+                    mLocationPermissionsArray,
+                    LOCATION_PERMISSIONS_REQUEST_CODE);
+        } else {
+            /* Yay! Required Permissions granted. Now we can proceed */
+            refreshWeather();
+        }
+    }
+
+//    Handle requestPermissions results
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case LOCATION_PERMISSIONS_REQUEST_CODE:
+                /* If request is cancelled, the result arrays are empty. */
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    /* Permissions was granted, yay! */
+                    refreshWeather();
+                } else {
+                    /* Permissions denied, boo! Shows toast with error */
+                    Toast.makeText(
+                            this,
+                            "Oops. Permissions denied :(",
+                            Toast.LENGTH_LONG
+                    ).show();
+                }
+        }
+    }
+
+    //    Implements LocationHandler interface
     @Override
     public void handleUserLocation(Location location) {
         /* Override member variables with new LAT & LONG values */
