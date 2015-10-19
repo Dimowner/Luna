@@ -15,7 +15,8 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
-        android:background="@drawable/refresh"/>
+        android:background="@drawable/refresh"
+        android:onClick="onClickRefreshIb"/>
 
     <ProgressBar
         android:id="@+id/refreshPb"
