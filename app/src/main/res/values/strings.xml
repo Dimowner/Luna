@@ -12,4 +12,7 @@
     <string name="pressureHeaderTv">PRESSURE</string>
     <string name="pressureValueTv">---</string>
     <string name="weatherSummaryTv">Weather Summary</string>
+    <string name="noLocationOrNetworkErrorMessage">Location or network are unavailable</string>
+    <string name="permissionsDeniedErrorMessage">Oops. Permissions denied :(</string>
+    <string name="locationNotFoundErrorMessage">Can\'t determine your location. Timeout :(</string>
 </resources>

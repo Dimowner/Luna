@@ -147,7 +147,7 @@ public class CurrentWeatherActivity extends AppCompatActivity implements Locatio
             /* Shows error Toast if location or network are unavailable */
             Toast.makeText(
                     this,
-                    "Location or network are unavailable",
+                    R.string.noLocationOrNetworkErrorMessage,
                     Toast.LENGTH_LONG
             ).show();
         }
@@ -167,7 +167,7 @@ public class CurrentWeatherActivity extends AppCompatActivity implements Locatio
                     /* Permissions denied, boo! Shows toast with error */
                     Toast.makeText(
                             this,
-                            "Oops. Permissions denied :(",
+                            R.string.permissionsDeniedErrorMessage,
                             Toast.LENGTH_LONG
                     ).show();
                 }
@@ -190,7 +190,7 @@ public class CurrentWeatherActivity extends AppCompatActivity implements Locatio
         /* Shows Toast with error */
         Toast.makeText(
                 this,
-                "Can't determine your location. Timeout :(",
+                R.string.locationNotFoundErrorMessage,
                 Toast.LENGTH_LONG
         ).show();
         /* Build currentWeatherUrl and download data from server */
