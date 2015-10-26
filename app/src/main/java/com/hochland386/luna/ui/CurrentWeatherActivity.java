@@ -69,6 +69,28 @@ public class CurrentWeatherActivity extends AppCompatActivity implements Locatio
 //        Members init
         mLocationWorker = new LocationWorker();
         mNetworkWorker = new NetworkWorker();
+
+//        Set onClickListener to refreshIb
+        refreshIb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /* Checks runtime permissions. Request permissions if it's not already granted */
+                if (ContextCompat.checkSelfPermission(CurrentWeatherActivity.this,
+                        mLocationPermissionsArray[0])
+                        != PackageManager.PERMISSION_GRANTED
+                        && ContextCompat.checkSelfPermission(CurrentWeatherActivity.this,
+                        mLocationPermissionsArray[1])
+                        != PackageManager.PERMISSION_GRANTED) {
+                    /* Warning! No permissions at this point of the time. Requesting ... */
+                    ActivityCompat.requestPermissions(CurrentWeatherActivity.this,
+                            mLocationPermissionsArray,
+                            LOCATION_PERMISSIONS_REQUEST_CODE);
+                } else {
+                    /* Yay! Required Permissions granted. Now we can proceed */
+                    refreshWeather();
+                }
+            }
+        });
     }
 
 //    Private interface
@@ -128,25 +150,6 @@ public class CurrentWeatherActivity extends AppCompatActivity implements Locatio
                     "Location or network are unavailable",
                     Toast.LENGTH_LONG
             ).show();
-        }
-    }
-
-//    OnClick methods
-    public void onClickRefreshIb(View view) {
-        /* Checks runtime permissions. Request permissions if it's not already granted */
-        if (ContextCompat.checkSelfPermission(this,
-                mLocationPermissionsArray[0])
-                != PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(this,
-                mLocationPermissionsArray[1])
-                != PackageManager.PERMISSION_GRANTED) {
-            /* Warning! No permissions at this point of the time. Requesting ... */
-            ActivityCompat.requestPermissions(this,
-                    mLocationPermissionsArray,
-                    LOCATION_PERMISSIONS_REQUEST_CODE);
-        } else {
-            /* Yay! Required Permissions granted. Now we can proceed */
-            refreshWeather();
         }
     }
 
