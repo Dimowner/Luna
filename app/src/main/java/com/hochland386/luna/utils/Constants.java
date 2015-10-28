@@ -14,6 +14,7 @@ public class Constants {
     public static final double DEFAULT_LATITUDE = 0.0;
     public static final double DEFAULT_LONGITUDE = 0.0;
     public static final String API_KEY = "7afd086976468949384e4359c0409420";
+    public static final String FORECAST_COUNT = "10";
 
 //    Make default constructor private
     private Constants() {
