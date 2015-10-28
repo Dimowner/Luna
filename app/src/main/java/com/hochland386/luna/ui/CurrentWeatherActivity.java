@@ -103,15 +103,17 @@ public class CurrentWeatherActivity extends AppCompatActivity implements Locatio
             public void run() {
                 toggleRefreshAnimationOff();
                 placeTv.setText(mCurrentWeather.getPlace());
-                if (mCurrentWeather.isTemperatureNegative()) {
+                if (mCurrentWeather.getTemperature() < 0) {
+                    int reversedTemperature = mCurrentWeather.getTemperature() * -1;
                     minusSymbolTv.setVisibility(View.VISIBLE);
-                    temperatureTv.setText(mCurrentWeather.getReversedTemperatureAsString());
+                    temperatureTv.setText(String.valueOf(reversedTemperature));
                 } else {
                     minusSymbolTv.setVisibility(View.INVISIBLE);
-                    temperatureTv.setText(mCurrentWeather.getTemperatureAsString());
+                    temperatureTv.setText(String.valueOf(mCurrentWeather.getTemperature()));
                 }
-                humidityValueTv.setText(mCurrentWeather.getHumidityAsString());
-                pressureValueTv.setText(mCurrentWeather.getPressureInMmhgAsString());
+                String formattedHumidity = String.format("%s", mCurrentWeather.getHumidity() + "%");
+                humidityValueTv.setText(formattedHumidity);
+                pressureValueTv.setText(String.valueOf(mCurrentWeather.getPressureInMmhg()));
                 weatherSummaryTv.setText(mCurrentWeather.getSummary());
             }
         });
