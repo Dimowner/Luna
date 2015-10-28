@@ -29,4 +29,25 @@ public class UrlBuilder {
                 Constants.API_KEY
         );
     }
+
+    /**
+     * Returns the URL suitable for obtaining forecast weather data from server.
+     * @param latitude User latitude
+     * @param longitude User longitude
+     * @return String forecastWeatherUrl
+     */
+    public static String buildForecastWeatherUrl(String latitude, String longitude) {
+        return String.format(
+                "http://api.openweathermap.org/data/2.5/forecast/daily" +
+                        "?lat=%s" +
+                        "&lon=%s" +
+                        "&units=metric" +
+                        "&cnt=%s" +
+                        "&appid=%s",
+                latitude,
+                longitude,
+                Constants.FORECAST_COUNT,
+                Constants.API_KEY
+        );
+    }
 }
