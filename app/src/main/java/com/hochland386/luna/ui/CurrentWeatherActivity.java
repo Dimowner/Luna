@@ -42,7 +42,6 @@ public class CurrentWeatherActivity extends AppCompatActivity implements Locatio
 
 //    Members
     private LocationWorker mLocationWorker;
-    private NetworkWorker mNetworkWorker;
     private String mLatitudeAsString = String.valueOf(Constants.DEFAULT_LATITUDE);
     private String mLongitudeAsString = String.valueOf(Constants.DEFAULT_LONGITUDE);
     private CurrentWeather mCurrentWeather;
@@ -68,7 +67,6 @@ public class CurrentWeatherActivity extends AppCompatActivity implements Locatio
 
 //        Members init
         mLocationWorker = new LocationWorker();
-        mNetworkWorker = new NetworkWorker();
 
 //        Set onClickListener to refreshIb
         refreshIb.setOnClickListener(new View.OnClickListener() {
@@ -103,15 +101,17 @@ public class CurrentWeatherActivity extends AppCompatActivity implements Locatio
             public void run() {
                 toggleRefreshAnimationOff();
                 placeTv.setText(mCurrentWeather.getPlace());
-                if (mCurrentWeather.isTemperatureNegative()) {
+                if (mCurrentWeather.getTemperature() < 0) {
+                    int reversedTemperature = mCurrentWeather.getTemperature() * -1;
                     minusSymbolTv.setVisibility(View.VISIBLE);
-                    temperatureTv.setText(mCurrentWeather.getReversedTemperatureAsString());
+                    temperatureTv.setText(String.valueOf(reversedTemperature));
                 } else {
                     minusSymbolTv.setVisibility(View.INVISIBLE);
-                    temperatureTv.setText(mCurrentWeather.getTemperatureAsString());
+                    temperatureTv.setText(String.valueOf(mCurrentWeather.getTemperature()));
                 }
-                humidityValueTv.setText(mCurrentWeather.getHumidityAsString());
-                pressureValueTv.setText(mCurrentWeather.getPressureInMmhgAsString());
+                String formattedHumidity = String.format("%s", mCurrentWeather.getHumidity() + "%");
+                humidityValueTv.setText(formattedHumidity);
+                pressureValueTv.setText(String.valueOf(mCurrentWeather.getPressureInMmhg()));
                 weatherSummaryTv.setText(mCurrentWeather.getSummary());
             }
         });
@@ -182,7 +182,7 @@ public class CurrentWeatherActivity extends AppCompatActivity implements Locatio
         mLongitudeAsString = String.valueOf(location.getLongitude());
         /* Build currentWeatherUrl and download data from server */
         String currentWeatherUrl = UrlBuilder.buildCurrentWeatherUrl(mLatitudeAsString, mLongitudeAsString);
-        mNetworkWorker.downloadDataFromUrl(currentWeatherUrl, this);
+        NetworkWorker.downloadDataFromUrl(currentWeatherUrl, this);
     }
 
     @Override
@@ -195,7 +195,7 @@ public class CurrentWeatherActivity extends AppCompatActivity implements Locatio
         ).show();
         /* Build currentWeatherUrl and download data from server */
         String currentWeatherUrl = UrlBuilder.buildCurrentWeatherUrl(mLatitudeAsString, mLongitudeAsString);
-        mNetworkWorker.downloadDataFromUrl(currentWeatherUrl, this);
+        NetworkWorker.downloadDataFromUrl(currentWeatherUrl, this);
     }
 
 //    Implements NetworkWorkerHandler interface

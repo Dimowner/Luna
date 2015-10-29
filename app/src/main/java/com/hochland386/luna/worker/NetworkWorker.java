@@ -20,21 +20,20 @@ public class NetworkWorker {
     }
 
 //    Members
-    private final OkHttpClient mClient;
+    private static final OkHttpClient mClient = new OkHttpClient();
 
-//    Constructor
-    public NetworkWorker() {
-        mClient = new OkHttpClient();
+//    Make default constructor private
+    private NetworkWorker() {
     }
 
-//    Public interface
+//    Public static interface
     /**
      * Downloads data from passed URL in background thread. handleResponse() interface method
      * will be called when data is ready or handleNetworkFailure() if error occurs
      * @param url URL
      * @param networkWorkerHandler class that implements an NetworkWorkerHandler interface
      */
-    public void downloadDataFromUrl(String url, final NetworkWorkerHandler networkWorkerHandler) {
+    public static void downloadDataFromUrl(String url, final NetworkWorkerHandler networkWorkerHandler) {
         Request request = new Request.Builder()
                 .url(url)
                 .build();
