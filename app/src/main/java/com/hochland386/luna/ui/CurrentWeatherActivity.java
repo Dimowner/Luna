@@ -42,7 +42,6 @@ public class CurrentWeatherActivity extends AppCompatActivity implements Locatio
 
 //    Members
     private LocationWorker mLocationWorker;
-    private NetworkWorker mNetworkWorker;
     private String mLatitudeAsString = String.valueOf(Constants.DEFAULT_LATITUDE);
     private String mLongitudeAsString = String.valueOf(Constants.DEFAULT_LONGITUDE);
     private CurrentWeather mCurrentWeather;
@@ -68,7 +67,6 @@ public class CurrentWeatherActivity extends AppCompatActivity implements Locatio
 
 //        Members init
         mLocationWorker = new LocationWorker();
-        mNetworkWorker = new NetworkWorker();
 
 //        Set onClickListener to refreshIb
         refreshIb.setOnClickListener(new View.OnClickListener() {
@@ -184,7 +182,7 @@ public class CurrentWeatherActivity extends AppCompatActivity implements Locatio
         mLongitudeAsString = String.valueOf(location.getLongitude());
         /* Build currentWeatherUrl and download data from server */
         String currentWeatherUrl = UrlBuilder.buildCurrentWeatherUrl(mLatitudeAsString, mLongitudeAsString);
-        mNetworkWorker.downloadDataFromUrl(currentWeatherUrl, this);
+        NetworkWorker.downloadDataFromUrl(currentWeatherUrl, this);
     }
 
     @Override
@@ -197,7 +195,7 @@ public class CurrentWeatherActivity extends AppCompatActivity implements Locatio
         ).show();
         /* Build currentWeatherUrl and download data from server */
         String currentWeatherUrl = UrlBuilder.buildCurrentWeatherUrl(mLatitudeAsString, mLongitudeAsString);
-        mNetworkWorker.downloadDataFromUrl(currentWeatherUrl, this);
+        NetworkWorker.downloadDataFromUrl(currentWeatherUrl, this);
     }
 
 //    Implements NetworkWorkerHandler interface
