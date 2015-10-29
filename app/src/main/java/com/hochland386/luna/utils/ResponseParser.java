@@ -1,7 +1,10 @@
 package com.hochland386.luna.utils;
 
 import com.hochland386.luna.model.CurrentWeather;
+import com.hochland386.luna.model.DailyWeather;
+import com.hochland386.luna.model.Forecast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,5 +43,37 @@ public class ResponseParser {
         String place = responseAsJSON
                 .getString("name");
         return new CurrentWeather(temperature, humidity, pressure, summary, place);
+    }
+
+    /**
+     * Parses JSON response from server, build Forecast object and return it
+     * @param response JSON response from server
+     * @return Forecast forecast
+     * @throws JSONException thrown if provided data is not valid JSON
+     */
+    public static Forecast parseForecastWeatherResponse(String response) throws JSONException {
+        JSONObject responseAsJSON = new JSONObject(response);
+        JSONArray dailiesJsonArray = responseAsJSON.getJSONArray("list");
+        int dailiesCount = dailiesJsonArray.length();
+        Forecast forecast = new Forecast(dailiesCount);
+        for (int i = 0; i < dailiesCount; i++) {
+            JSONObject dailyJson = dailiesJsonArray.getJSONObject(i);
+            int temperature = dailyJson
+                    .getJSONObject("temp")
+                    .getInt("day");
+            int humidity = dailyJson
+                    .getInt("humidity");
+            int pressure = dailyJson
+                    .getInt("pressure");
+            String summary = dailyJson
+                    .getJSONArray("weather")
+                    .getJSONObject(0)
+                    .getString("description");
+            long timeStamp = dailyJson
+                    .getLong("dt");
+            DailyWeather dailyWeather = new DailyWeather(temperature, humidity, pressure, summary, timeStamp);
+            forecast.setDailyAtIndex(i, dailyWeather);
+        }
+        return forecast;
     }
 }
