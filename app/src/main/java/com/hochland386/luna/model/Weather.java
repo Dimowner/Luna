@@ -45,16 +45,8 @@ public abstract class Weather {
      * Returns pressure in hectopascals
      * @return int pressure
      */
-    public final int getPressureInHpa() {
+    public final int getPressure() {
         return mPressure;
-    }
-
-    /**
-     * Returns pressure in millimeter of mercury
-     * @return int pressure
-     */
-    public final int getPressureInMmhg() {
-        return (int) (mPressure * 0.75);
     }
 
     /**
@@ -62,10 +54,6 @@ public abstract class Weather {
      * @return String summary
      */
     public final String getSummary() {
-        return mSummary
-                .substring(0, 1)
-                .toUpperCase()
-                + mSummary
-                .substring(1);
+        return mSummary;
     }
 }

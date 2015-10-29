@@ -111,8 +111,13 @@ public class CurrentWeatherActivity extends AppCompatActivity implements Locatio
                 }
                 String formattedHumidity = String.format("%s", mCurrentWeather.getHumidity() + "%");
                 humidityValueTv.setText(formattedHumidity);
-                pressureValueTv.setText(String.valueOf(mCurrentWeather.getPressureInMmhg()));
-                weatherSummaryTv.setText(mCurrentWeather.getSummary());
+                pressureValueTv.setText(String.valueOf(mCurrentWeather.getPressure() * 0.75));
+                String uppercaseSummary = mCurrentWeather.getSummary()
+                        .substring(0, 1)
+                        .toUpperCase()
+                        + mCurrentWeather.getSummary()
+                        .substring(1);
+                weatherSummaryTv.setText(uppercaseSummary);
             }
         });
     }
