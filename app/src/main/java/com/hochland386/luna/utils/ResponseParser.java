@@ -71,7 +71,11 @@ public class ResponseParser {
                     .getString("description");
             long timeStamp = dailyJson
                     .getLong("dt");
-            DailyWeather dailyWeather = new DailyWeather(temperature, humidity, pressure, summary, timeStamp);
+            String conditionGroup = dailyJson
+                    .getJSONArray("weather")
+                    .getJSONObject(0)
+                    .getString("main");
+            DailyWeather dailyWeather = new DailyWeather(temperature, humidity, pressure, summary, timeStamp, conditionGroup);
             forecast.setDailyAtIndex(i, dailyWeather);
         }
         return forecast;
