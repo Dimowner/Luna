@@ -1,11 +1,11 @@
 package com.hochland386.luna.ui;
 
+import android.app.ListActivity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
 import com.hochland386.luna.R;
 
-public class DailyForecastActivity extends AppCompatActivity {
+public class DailyForecastActivity extends ListActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
