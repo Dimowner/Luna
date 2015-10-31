@@ -7,17 +7,20 @@ public class DailyWeather extends Weather {
 
 //    DailyWeather-specific members
     private long mTimeStamp;
+    private String mConditionGroup;
 
 //    Constructor
-    public DailyWeather(int temperature, int humidity, int pressure, String summary, long timeStamp) {
+    public DailyWeather(int temperature, int humidity, int pressure, String summary, long timeStamp, String conditionGroup) {
         super(temperature, humidity, pressure, summary);
         mTimeStamp = timeStamp;
+        mConditionGroup = conditionGroup;
     }
 
 //    Override default constructor
     public DailyWeather() {
         super();
         mTimeStamp = 0;
+        mConditionGroup = "Clear";
     }
 
 //    DailyWeather-specific getters
@@ -27,5 +30,13 @@ public class DailyWeather extends Weather {
      */
     public long getTimeStamp() {
         return mTimeStamp;
+    }
+
+    /**
+     * Returns conditionGroup value
+     * @return String conditionGroup
+     */
+    public String getConditionGroup() {
+        return mConditionGroup;
     }
 }
