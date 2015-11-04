@@ -16,13 +16,23 @@ public class ProvidersChecker {
     private ProvidersChecker() {
     }
 
+//    Singleton wrapper
+    private static class Loader {
+        static ProvidersChecker instance = new ProvidersChecker();
+    }
+
+//    Implements getInstance() method
+    public static ProvidersChecker getInstance() {
+        return Loader.instance;
+    }
+
 //    Public interface
     /**
      * Returns true if location services enabled and available
      * @param context context
      * @return boolean isLocationEnabled
      */
-    public static boolean isLocationEnabled(Context context) {
+    public boolean isLocationEnabled(Context context) {
         String locationProviders = Settings.Secure.getString(
                 context.getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED
         );
@@ -34,7 +44,7 @@ public class ProvidersChecker {
      * @param context context
      * @return boolean isOnline
      */
-    public static boolean isNetworkAvailable(Context context) {
+    public boolean isNetworkAvailable(Context context) {
         ConnectivityManager connectivityManager =
                 (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
@@ -46,7 +56,7 @@ public class ProvidersChecker {
      * @param context context
      * @return boolean isLocationAndNetworkAvailable
      */
-    public static boolean isLocationAndNetworkAvailable(Context context) {
+    public boolean isLocationAndNetworkAvailable(Context context) {
         return isLocationEnabled(context) && isNetworkAvailable(context);
     }
 }
