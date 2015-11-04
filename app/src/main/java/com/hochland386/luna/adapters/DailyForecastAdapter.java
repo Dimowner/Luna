@@ -64,7 +64,8 @@ public class DailyForecastAdapter extends BaseAdapter {
 //        Setting the data
         DailyWeather dailyWeather = mForecast.getDailyWithIndex(position);
 //        Convert timestamp to human-friendly date and set it
-        String formattedDate = DateFormatUtils.getFormattedDate(dailyWeather.getTimeStamp());
+        DateFormatUtils dateFormatUtils = DateFormatUtils.getInstance();
+        String formattedDate = dateFormatUtils.getFormattedDate(dailyWeather.getTimeStamp());
         holder.dailyDateTv.setText(formattedDate);
 //        Setting temperature
         holder.dailyTemperatureTv.setText(String.format("%s\u00B0", dailyWeather.getTemperature()));
