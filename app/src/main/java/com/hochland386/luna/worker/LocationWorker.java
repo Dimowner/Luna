@@ -36,6 +36,7 @@ public class LocationWorker {
 
 //    Make default constructor private
     private LocationWorker() {
+        EventBus.getDefault().register(this);
     }
 
 //    Singleton wrapper
