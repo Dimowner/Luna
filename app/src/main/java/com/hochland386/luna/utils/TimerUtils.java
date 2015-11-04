@@ -14,10 +14,20 @@ public class TimerUtils {
     }
 
 //    Members
-    private static CountDownTimer mLocationTimer;
+    private CountDownTimer mLocationTimer;
 
 //    Make default constructor private
     private TimerUtils() {
+    }
+
+//    Singleton wrapper
+    private static class Loader {
+        static TimerUtils instance = new TimerUtils();
+    }
+
+//    Implements getInstance() method
+    public static TimerUtils getInstance() {
+        return Loader.instance;
     }
 
 //    Public interface
@@ -27,7 +37,7 @@ public class TimerUtils {
      * If a timeout occurs handleTimerTimeout() interface method will be called.
      * @param timeoutHandler class which implements TimerTimeout interface
      */
-    public static void startLocationTimeoutTimer(final TimerTimeout timeoutHandler) {
+    public void startLocationTimeoutTimer(final TimerTimeout timeoutHandler) {
         mLocationTimer = new CountDownTimer(Constants.LOCATION_TIMEOUT, Constants.COUNT_DOWN_INTERVAL) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -45,7 +55,7 @@ public class TimerUtils {
     /**
      * Cancel location timeout timer.
      */
-    public static void cancelLocationTimeoutTimer() {
+    public void cancelLocationTimeoutTimer() {
         mLocationTimer.cancel();
     }
 }
