@@ -41,7 +41,6 @@ public class CurrentWeatherActivity extends AppCompatActivity implements Locatio
             humidityValueTv, pressureValueTv, weatherSummaryTv;
 
 //    Members
-    private LocationWorker mLocationWorker;
     private String mLatitudeAsString = String.valueOf(Constants.DEFAULT_LATITUDE);
     private String mLongitudeAsString = String.valueOf(Constants.DEFAULT_LONGITUDE);
     private CurrentWeather mCurrentWeather;
@@ -64,9 +63,6 @@ public class CurrentWeatherActivity extends AppCompatActivity implements Locatio
         humidityValueTv = (TextView) findViewById(R.id.humidityValueTv);
         pressureValueTv = (TextView) findViewById(R.id.pressureValueTv);
         weatherSummaryTv = (TextView) findViewById(R.id.weatherSummaryTv);
-
-//        Members init
-        mLocationWorker = new LocationWorker();
 
 //        Set onClickListener to refreshIb
         refreshIb.setOnClickListener(new View.OnClickListener() {
@@ -158,7 +154,8 @@ public class CurrentWeatherActivity extends AppCompatActivity implements Locatio
         /* Checks availability of location and network and request location from LocationWorker */
         if (ProvidersChecker.isLocationAndNetworkAvailable(this)) {
             toggleRefreshAnimationOn();
-            mLocationWorker.determineUserLocation(this, this);
+            LocationWorker locationWorker = LocationWorker.getInstance();
+            locationWorker.determineUserLocation(this, this);
         } else {
             /* Shows error Toast if location or network are unavailable */
             Toast.makeText(
