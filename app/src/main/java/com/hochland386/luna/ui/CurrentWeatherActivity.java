@@ -198,7 +198,7 @@ public class CurrentWeatherActivity extends AppCompatActivity implements Locatio
         UrlBuilder urlBuilder = UrlBuilder.getInstance();
         String currentWeatherUrl = urlBuilder.buildCurrentWeatherUrl(mLatitudeAsString, mLongitudeAsString);
         NetworkWorker networkWorker = NetworkWorker.getInstance();
-        networkWorker.downloadDataFromUrl(currentWeatherUrl, this);
+        networkWorker.downloadCurrentWeatherData(currentWeatherUrl, this);
     }
 
     @Override
@@ -213,7 +213,7 @@ public class CurrentWeatherActivity extends AppCompatActivity implements Locatio
         UrlBuilder urlBuilder = UrlBuilder.getInstance();
         String currentWeatherUrl = urlBuilder.buildCurrentWeatherUrl(mLatitudeAsString, mLongitudeAsString);
         NetworkWorker networkWorker = NetworkWorker.getInstance();
-        networkWorker.downloadDataFromUrl(currentWeatherUrl, this);
+        networkWorker.downloadCurrentWeatherData(currentWeatherUrl, this);
     }
 
 //    Implements NetworkWorkerHandler interface

@@ -1,5 +1,7 @@
 package com.hochland386.luna.worker;
 
+import com.hochland386.luna.bus.CurrentWeatherFailureEvent;
+import com.hochland386.luna.bus.CurrentWeatherResponseEvent;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -7,17 +9,13 @@ import com.squareup.okhttp.Response;
 
 import java.io.IOException;
 
+import de.greenrobot.event.EventBus;
+
 /**
  * Created by vitaly on 10/18/15.
  * This class provides public interface and callback to download data from URL in background thread
  */
 public class NetworkWorker {
-
-//    NetworkWorkerHandler interface
-    public interface NetworkWorkerHandler {
-        void handleResponse(String response);
-        void handleNetworkFailure();
-    }
 
 //    Members
     private final OkHttpClient mClient = new OkHttpClient();
@@ -38,24 +36,24 @@ public class NetworkWorker {
 
 //    Public interface
     /**
-     * Downloads data from passed URL in background thread. handleResponse() interface method
-     * will be called when data is ready or handleNetworkFailure() if error occurs
+     * Downloads data from passed URL in background thread. CurrentWeatherResponseEvent will be
+     * posted when data is ready or CurrentWeatherFailureEvent if any error occurs
      * @param url URL
-     * @param networkWorkerHandler class that implements an NetworkWorkerHandler interface
      */
-    public void downloadDataFromUrl(String url, final NetworkWorkerHandler networkWorkerHandler) {
+    public void downloadCurrentWeatherData(String url) {
         Request request = new Request.Builder()
                 .url(url)
                 .build();
         mClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Request request, IOException e) {
-                networkWorkerHandler.handleNetworkFailure();
+                EventBus.getDefault().post(new CurrentWeatherFailureEvent());
             }
 
             @Override
             public void onResponse(Response response) throws IOException {
-                networkWorkerHandler.handleResponse(response.body().string());
+                String responseAsString = response.body().string();
+                EventBus.getDefault().post(new CurrentWeatherResponseEvent(responseAsString));
             }
         });
     }
