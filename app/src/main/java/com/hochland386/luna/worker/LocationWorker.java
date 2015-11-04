@@ -7,33 +7,30 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 
+import com.hochland386.luna.bus.LocationChangedEvent;
+import com.hochland386.luna.bus.LocationFailureEvent;
+import com.hochland386.luna.bus.TimerTimeoutEvent;
 import com.hochland386.luna.utils.Constants;
 import com.hochland386.luna.utils.LocationUtils;
 import com.hochland386.luna.utils.TimerUtils;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by vitaly on 10/18/15.
  * This class provides public interface and callback to determine user location
  */
 @SuppressWarnings("ResourceType")
-public class LocationWorker implements TimerUtils.TimerTimeout {
+public class LocationWorker {
 
-//    Handle Location Timer timeout
-    @Override
-    public void handleTimerTimeout() {
-        /* Remove updates from listener and call handleLocationFailure() */
+    //    Handle TimerTimeoutEvent
+    public void onEvent(TimerTimeoutEvent ev) {
+        /* Remove updates from listener and post LocationFailureEvent */
         mLocationManager.removeUpdates(mLocationListener);
-        mLocationHandler.handleLocationFailure();
-    }
-
-    //    LocationHandler interface
-    public interface LocationHandler {
-        void handleUserLocation(Location location);
-        void handleLocationFailure();
+        EventBus.getDefault().post(new LocationFailureEvent("Location timeout"));
     }
 
 //    Members
-    private LocationHandler mLocationHandler;
     private LocationManager mLocationManager;
     private LocationListener mLocationListener;
 
@@ -56,13 +53,11 @@ public class LocationWorker implements TimerUtils.TimerTimeout {
      * Trying to determine user location using suitable provider.
      * By default, the priority is given to POWER_LOW requirements which means in most cases
      * network location provider will be used. If for some reasons location not found within
-     * 45 seconds then handleLocationFailure() interface method will be called
+     * 45 seconds then LocationFailureEvent will be posted
      * @param context context
-     * @param locationHandler class that implements an LocationHandler interface
      */
-    public void determineUserLocation(Context context, LocationHandler locationHandler) {
+    public void determineUserLocation(Context context) {
         /* Members init */
-        mLocationHandler = locationHandler;
         mLocationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         mLocationListener = new LocationListener() {
             @Override
@@ -71,7 +66,7 @@ public class LocationWorker implements TimerUtils.TimerTimeout {
                 TimerUtils timerUtils = TimerUtils.getInstance();
                 timerUtils.cancelLocationTimeoutTimer();
                 mLocationManager.removeUpdates(mLocationListener);
-                mLocationHandler.handleUserLocation(location);
+                EventBus.getDefault().post(new LocationChangedEvent(location));
             }
 
             @Override
@@ -90,7 +85,7 @@ public class LocationWorker implements TimerUtils.TimerTimeout {
                 TimerUtils timerUtils = TimerUtils.getInstance();
                 timerUtils.cancelLocationTimeoutTimer();
                 mLocationManager.removeUpdates(mLocationListener);
-                mLocationHandler.handleLocationFailure();
+                EventBus.getDefault().post(new LocationFailureEvent("Location provider disabled"));
             }
         };
         /* Obtain locationProviderCriteria and best location provider */
@@ -99,7 +94,7 @@ public class LocationWorker implements TimerUtils.TimerTimeout {
         String locationProvider = mLocationManager.getBestProvider(locationProviderCriteria, true);
         /* Start Location Timeout timer and request location updates */
         TimerUtils timerUtils = TimerUtils.getInstance();
-        timerUtils.startLocationTimeoutTimer(this);
+        timerUtils.startLocationTimeoutTimer();
         mLocationManager.requestLocationUpdates(
                 locationProvider,
                 Constants.LOCATION_MIN_TIME,
