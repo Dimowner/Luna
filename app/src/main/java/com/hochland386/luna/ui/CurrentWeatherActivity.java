@@ -219,7 +219,8 @@ public class CurrentWeatherActivity extends AppCompatActivity implements Locatio
     public void handleResponse(String response) {
         /* Trying to parse response and build CurrentWeather object */
         try {
-            mCurrentWeather = ResponseParser.parseCurrentWeatherResponse(response);
+            ResponseParser responseParser = ResponseParser.getInstance();
+            mCurrentWeather = responseParser.parseCurrentWeatherResponse(response);
         } catch (JSONException e) {
             e.printStackTrace();
             /* This will create a mock CurrentWeather object */
