@@ -152,7 +152,8 @@ public class CurrentWeatherActivity extends AppCompatActivity implements Locatio
      */
     private void getCurrentWeather() {
         /* Checks availability of location and network and request location from LocationWorker */
-        if (ProvidersChecker.isLocationAndNetworkAvailable(this)) {
+        ProvidersChecker providersChecker = ProvidersChecker.getInstance();
+        if (providersChecker.isLocationAndNetworkAvailable(this)) {
             toggleRefreshAnimationOn();
             LocationWorker locationWorker = LocationWorker.getInstance();
             locationWorker.determineUserLocation(this, this);
