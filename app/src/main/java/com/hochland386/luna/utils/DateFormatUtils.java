@@ -11,19 +11,30 @@ import java.util.TimeZone;
 public class DateFormatUtils {
 
 //    Members
-    private static SimpleDateFormat mFormatter = new SimpleDateFormat("dd LLL");
+    private SimpleDateFormat mFormatter;
 
 //    Make default constructor private
     private DateFormatUtils() {
+        mFormatter = new SimpleDateFormat("dd LLL");
     }
 
-//    Public static interface
+//    Singleton wrapper
+    private static class Loader {
+        static DateFormatUtils instance = new DateFormatUtils();
+    }
+
+//    Implements getInstance() method
+    public static DateFormatUtils getInstance() {
+        return Loader.instance;
+    }
+
+//    Public interface
     /**
-     * Format unix timestamp (in seconds) to human-friendly date with dd MMM pattern
+     * Format unix timestamp (in seconds) to human-friendly date with DD MMM pattern
      * @param timestamp unix timestamp in seconds
      * @return String formattedDate
      */
-    public static String getFormattedDate(long timestamp) {
+    public String getFormattedDate(long timestamp) {
         mFormatter.setTimeZone(TimeZone.getDefault());
         Date date = new Date(timestamp * 1000);
         return mFormatter.format(date);
