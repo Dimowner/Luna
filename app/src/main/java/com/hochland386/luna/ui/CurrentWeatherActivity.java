@@ -228,7 +228,9 @@ public class CurrentWeatherActivity extends AppCompatActivity implements Locatio
         double latitudeAsDouble = Double.parseDouble(mLatitudeAsString);
         double longitudeAsDouble = Double.parseDouble(mLongitudeAsString);
         try {
-            List<Address> addresses = GeocoderUtils.getPlaceFromLocation(this, latitudeAsDouble, longitudeAsDouble);
+            GeocoderUtils geocoderUtils = GeocoderUtils.getInstance();
+            List<Address> addresses = geocoderUtils.getPlaceFromLocation(
+                    this, latitudeAsDouble, longitudeAsDouble);
             if (addresses.size() > 0) {
                 if (addresses.get(0).getLocality() != null) {
                     mCurrentWeather.setPlace(addresses.get(0).getLocality());
