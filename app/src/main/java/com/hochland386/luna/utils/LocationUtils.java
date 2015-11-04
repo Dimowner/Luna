@@ -12,12 +12,22 @@ public class LocationUtils {
     private LocationUtils() {
     }
 
+//    Singleton wrapper
+    private static class Loader {
+        static LocationUtils instance = new LocationUtils();
+    }
+
+//    Implements getInstance() method
+    public static LocationUtils getInstance() {
+        return Loader.instance;
+    }
+
 //    Public interface
     /**
      * Returns a Criteria object with ACCURACY_COARSE and POWER_LOW requirements
      * @return Criteria locationProviderCriteria
      */
-    public static Criteria getLocationProviderCriteria() {
+    public Criteria getLocationProviderCriteria() {
         Criteria locationProviderCriteria = new Criteria();
         locationProviderCriteria.setAccuracy(Criteria.ACCURACY_COARSE);
         locationProviderCriteria.setPowerRequirement(Criteria.POWER_LOW);
