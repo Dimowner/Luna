@@ -195,7 +195,8 @@ public class CurrentWeatherActivity extends AppCompatActivity implements Locatio
         mLatitudeAsString = String.valueOf(location.getLatitude());
         mLongitudeAsString = String.valueOf(location.getLongitude());
         /* Build currentWeatherUrl and download data from server */
-        String currentWeatherUrl = UrlBuilder.buildCurrentWeatherUrl(mLatitudeAsString, mLongitudeAsString);
+        UrlBuilder urlBuilder = UrlBuilder.getInstance();
+        String currentWeatherUrl = urlBuilder.buildCurrentWeatherUrl(mLatitudeAsString, mLongitudeAsString);
         NetworkWorker networkWorker = NetworkWorker.getInstance();
         networkWorker.downloadDataFromUrl(currentWeatherUrl, this);
     }
@@ -209,7 +210,8 @@ public class CurrentWeatherActivity extends AppCompatActivity implements Locatio
                 Toast.LENGTH_LONG
         ).show();
         /* Build currentWeatherUrl and download data from server */
-        String currentWeatherUrl = UrlBuilder.buildCurrentWeatherUrl(mLatitudeAsString, mLongitudeAsString);
+        UrlBuilder urlBuilder = UrlBuilder.getInstance();
+        String currentWeatherUrl = urlBuilder.buildCurrentWeatherUrl(mLatitudeAsString, mLongitudeAsString);
         NetworkWorker networkWorker = NetworkWorker.getInstance();
         networkWorker.downloadDataFromUrl(currentWeatherUrl, this);
     }
