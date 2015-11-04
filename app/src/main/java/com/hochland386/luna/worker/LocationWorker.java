@@ -68,7 +68,8 @@ public class LocationWorker implements TimerUtils.TimerTimeout {
             @Override
             public void onLocationChanged(Location location) {
                 /* Cancel timer, remove updates from listener and call handleUserLocation() */
-                TimerUtils.cancelLocationTimeoutTimer();
+                TimerUtils timerUtils = TimerUtils.getInstance();
+                timerUtils.cancelLocationTimeoutTimer();
                 mLocationManager.removeUpdates(mLocationListener);
                 mLocationHandler.handleUserLocation(location);
             }
@@ -86,7 +87,8 @@ public class LocationWorker implements TimerUtils.TimerTimeout {
             @Override
             public void onProviderDisabled(String provider) {
                 /* Cancel timer, remove updates from listener and call handleLocationFailure() */
-                TimerUtils.cancelLocationTimeoutTimer();
+                TimerUtils timerUtils = TimerUtils.getInstance();
+                timerUtils.cancelLocationTimeoutTimer();
                 mLocationManager.removeUpdates(mLocationListener);
                 mLocationHandler.handleLocationFailure();
             }
@@ -96,7 +98,8 @@ public class LocationWorker implements TimerUtils.TimerTimeout {
         Criteria locationProviderCriteria = locationUtils.getLocationProviderCriteria();
         String locationProvider = mLocationManager.getBestProvider(locationProviderCriteria, true);
         /* Start Location Timeout timer and request location updates */
-        TimerUtils.startLocationTimeoutTimer(this);
+        TimerUtils timerUtils = TimerUtils.getInstance();
+        timerUtils.startLocationTimeoutTimer(this);
         mLocationManager.requestLocationUpdates(
                 locationProvider,
                 Constants.LOCATION_MIN_TIME,
