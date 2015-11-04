@@ -19,6 +19,16 @@ public class GeocoderUtils {
     private GeocoderUtils() {
     }
 
+//    Singleton wrapper
+    private static class Loader {
+        static GeocoderUtils instance = new GeocoderUtils();
+    }
+
+//    Implements getInstance() method
+    public static GeocoderUtils getInstance() {
+        return Loader.instance;
+    }
+
 //    Public interface
     /**
      * Transform latitude/longitude coordinate into a address.
@@ -28,7 +38,7 @@ public class GeocoderUtils {
      * @return List of Address objects
      * @throws IOException thrown if the network is unavailable or any other I/O problem occurs
      */
-    public static List<Address> getPlaceFromLocation(Context context, double latitude, double longitude) throws IOException {
+    public List<Address> getPlaceFromLocation(Context context, double latitude, double longitude) throws IOException {
         Geocoder geocoder = new Geocoder(context, Locale.ENGLISH);
         return geocoder.getFromLocation(latitude, longitude, 1);
     }
