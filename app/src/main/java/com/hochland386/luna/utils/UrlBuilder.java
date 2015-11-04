@@ -10,6 +10,16 @@ public class UrlBuilder {
     private UrlBuilder() {
     }
 
+//    Singleton wrapper
+    private static class Loader {
+        static UrlBuilder instance = new UrlBuilder();
+    }
+
+//    Implements getInstance() method
+    public static UrlBuilder getInstance() {
+        return Loader.instance;
+    }
+
 //    Public interface
     /**
      * Returns the URL suitable for obtaining current weather data from the server.
@@ -17,7 +27,7 @@ public class UrlBuilder {
      * @param longitude User longitude
      * @return String currentWeatherUrl
      */
-    public static String buildCurrentWeatherUrl(String latitude, String longitude) {
+    public String buildCurrentWeatherUrl(String latitude, String longitude) {
         return String.format(
                 "http://api.openweathermap.org/data/2.5/weather" +
                         "?lat=%s" +
@@ -36,7 +46,7 @@ public class UrlBuilder {
      * @param longitude User longitude
      * @return String forecastWeatherUrl
      */
-    public static String buildForecastWeatherUrl(String latitude, String longitude) {
+    public String buildForecastWeatherUrl(String latitude, String longitude) {
         return String.format(
                 "http://api.openweathermap.org/data/2.5/forecast/daily" +
                         "?lat=%s" +
