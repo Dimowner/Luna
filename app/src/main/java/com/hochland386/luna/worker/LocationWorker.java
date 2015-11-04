@@ -92,7 +92,8 @@ public class LocationWorker implements TimerUtils.TimerTimeout {
             }
         };
         /* Obtain locationProviderCriteria and best location provider */
-        Criteria locationProviderCriteria = LocationUtils.getLocationProviderCriteria();
+        LocationUtils locationUtils = LocationUtils.getInstance();
+        Criteria locationProviderCriteria = locationUtils.getLocationProviderCriteria();
         String locationProvider = mLocationManager.getBestProvider(locationProviderCriteria, true);
         /* Start Location Timeout timer and request location updates */
         TimerUtils.startLocationTimeoutTimer(this);
