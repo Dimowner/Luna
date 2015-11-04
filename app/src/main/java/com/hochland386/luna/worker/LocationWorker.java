@@ -37,6 +37,20 @@ public class LocationWorker implements TimerUtils.TimerTimeout {
     private LocationManager mLocationManager;
     private LocationListener mLocationListener;
 
+//    Make default constructor private
+    private LocationWorker() {
+    }
+
+//    Singleton wrapper
+    private static class Loader {
+        static LocationWorker instance = new LocationWorker();
+    }
+
+//    Implements getInstance() method
+    public static LocationWorker getInstance() {
+        return Loader.instance;
+    }
+
 //    Public interface
     /**
      * Trying to determine user location using suitable provider.
