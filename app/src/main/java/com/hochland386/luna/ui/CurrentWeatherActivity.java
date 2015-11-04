@@ -15,6 +15,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hochland386.luna.R;
+import com.hochland386.luna.bus.CurrentWeatherFailureEvent;
+import com.hochland386.luna.bus.CurrentWeatherResponseEvent;
+import com.hochland386.luna.bus.LocationChangedEvent;
+import com.hochland386.luna.bus.LocationFailureEvent;
 import com.hochland386.luna.model.CurrentWeather;
 import com.hochland386.luna.utils.Constants;
 import com.hochland386.luna.utils.GeocoderUtils;
@@ -29,7 +33,9 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.util.List;
 
-public class CurrentWeatherActivity extends AppCompatActivity implements LocationWorker.LocationHandler, NetworkWorker.NetworkWorkerHandler {
+import de.greenrobot.event.EventBus;
+
+public class CurrentWeatherActivity extends AppCompatActivity {
 
 //    Constants
     private final int LOCATION_PERMISSIONS_REQUEST_CODE = 0;
@@ -71,6 +77,9 @@ public class CurrentWeatherActivity extends AppCompatActivity implements Locatio
                 refreshWeather();
             }
         });
+
+//        Register for events
+        EventBus.getDefault().register(this);
 
 //        Refresh weather data when activity first created
         refreshWeather();
@@ -156,7 +165,7 @@ public class CurrentWeatherActivity extends AppCompatActivity implements Locatio
         if (providersChecker.isLocationAndNetworkAvailable(this)) {
             toggleRefreshAnimationOn();
             LocationWorker locationWorker = LocationWorker.getInstance();
-            locationWorker.determineUserLocation(this, this);
+            locationWorker.determineUserLocation(this);
         } else {
             /* Shows error Toast if location or network are unavailable */
             Toast.makeText(
@@ -188,9 +197,9 @@ public class CurrentWeatherActivity extends AppCompatActivity implements Locatio
         }
     }
 
-    //    Implements LocationHandler interface
-    @Override
-    public void handleUserLocation(Location location) {
+    //    Implements Location events
+    public void onEvent(LocationChangedEvent ev) {
+        Location location = ev.getLocation();
         /* Override member variables with new LAT & LONG values */
         mLatitudeAsString = String.valueOf(location.getLatitude());
         mLongitudeAsString = String.valueOf(location.getLongitude());
@@ -198,27 +207,26 @@ public class CurrentWeatherActivity extends AppCompatActivity implements Locatio
         UrlBuilder urlBuilder = UrlBuilder.getInstance();
         String currentWeatherUrl = urlBuilder.buildCurrentWeatherUrl(mLatitudeAsString, mLongitudeAsString);
         NetworkWorker networkWorker = NetworkWorker.getInstance();
-        networkWorker.downloadCurrentWeatherData(currentWeatherUrl, this);
+        networkWorker.downloadCurrentWeatherData(currentWeatherUrl);
     }
 
-    @Override
-    public void handleLocationFailure() {
-        /* Shows Toast with error */
+    public void onEvent(LocationFailureEvent ev) {
+    /* Shows Toast with error */
         Toast.makeText(
                 this,
-                R.string.locationNotFoundErrorMessage,
+                ev.getFailureMessage(),
                 Toast.LENGTH_LONG
         ).show();
         /* Build currentWeatherUrl and download data from server */
         UrlBuilder urlBuilder = UrlBuilder.getInstance();
         String currentWeatherUrl = urlBuilder.buildCurrentWeatherUrl(mLatitudeAsString, mLongitudeAsString);
         NetworkWorker networkWorker = NetworkWorker.getInstance();
-        networkWorker.downloadCurrentWeatherData(currentWeatherUrl, this);
+        networkWorker.downloadCurrentWeatherData(currentWeatherUrl);
     }
 
-//    Implements NetworkWorkerHandler interface
-    @Override
-    public void handleResponse(String response) {
+//    Implements Network events
+    public void onEvent(CurrentWeatherResponseEvent ev) {
+        String response = ev.getResponse();
         /* Trying to parse response and build CurrentWeather object */
         try {
             ResponseParser responseParser = ResponseParser.getInstance();
@@ -247,8 +255,7 @@ public class CurrentWeatherActivity extends AppCompatActivity implements Locatio
         updateUi();
     }
 
-    @Override
-    public void handleNetworkFailure() {
+    public void onEvent(CurrentWeatherFailureEvent ev) {
         /* Create a mock CurrentWeather object and call updateUi() */
         mCurrentWeather = new CurrentWeather();
         updateUi();
