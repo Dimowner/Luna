@@ -18,6 +18,16 @@ public class ResponseParser {
     private ResponseParser() {
     }
 
+//    Singleton wrapper
+    private static class Loader {
+        static ResponseParser instance = new ResponseParser();
+    }
+
+//    Implements getInstance() method
+    public static ResponseParser getInstance() {
+        return Loader.instance;
+    }
+
 //    Public interface
     /**
      * Parses JSON response from server, build CurrentWeather object and return it
@@ -25,7 +35,7 @@ public class ResponseParser {
      * @return CurrentWeather currentWeather
      * @throws JSONException thrown if provided data is not valid JSON
      */
-    public static CurrentWeather parseCurrentWeatherResponse(String response) throws JSONException {
+    public CurrentWeather parseCurrentWeatherResponse(String response) throws JSONException {
         JSONObject responseAsJSON = new JSONObject(response);
         int temperature = responseAsJSON
                 .getJSONObject("main")
@@ -51,7 +61,7 @@ public class ResponseParser {
      * @return Forecast forecast
      * @throws JSONException thrown if provided data is not valid JSON
      */
-    public static Forecast parseForecastWeatherResponse(String response) throws JSONException {
+    public Forecast parseForecastWeatherResponse(String response) throws JSONException {
         JSONObject responseAsJSON = new JSONObject(response);
         JSONArray dailiesJsonArray = responseAsJSON.getJSONArray("list");
         int dailiesCount = dailiesJsonArray.length();
