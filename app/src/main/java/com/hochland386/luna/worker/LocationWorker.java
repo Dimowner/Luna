@@ -27,16 +27,25 @@ public class LocationWorker {
     public void onEvent(TimerTimeoutEvent ev) {
         /* Remove updates from listener and post LocationFailureEvent */
         mLocationManager.removeUpdates(mLocationListener);
+        mIsListeningForUpdates = false;
         EventBus.getDefault().post(new LocationFailureEvent("Location timeout"));
     }
 
 //    Members
     private LocationManager mLocationManager;
     private LocationListener mLocationListener;
+    private boolean mIsDetermineUserLocationTriggered;
+    private boolean mIsListeningForUpdates;
+    private double mLatitude;
+    private double mLongitude;
 
 //    Make default constructor private
     private LocationWorker() {
         EventBus.getDefault().register(this);
+        mIsDetermineUserLocationTriggered = false;
+        mIsListeningForUpdates = false;
+        mLatitude = 0.0;
+        mLongitude = 0.0;
     }
 
 //    Singleton wrapper
@@ -67,6 +76,9 @@ public class LocationWorker {
                 TimerUtils timerUtils = TimerUtils.getInstance();
                 timerUtils.cancelLocationTimeoutTimer();
                 mLocationManager.removeUpdates(mLocationListener);
+                mIsListeningForUpdates = false;
+                mLatitude = location.getLatitude();
+                mLongitude = location.getLongitude();
                 EventBus.getDefault().post(new LocationChangedEvent(location));
             }
 
@@ -86,6 +98,7 @@ public class LocationWorker {
                 TimerUtils timerUtils = TimerUtils.getInstance();
                 timerUtils.cancelLocationTimeoutTimer();
                 mLocationManager.removeUpdates(mLocationListener);
+                mIsListeningForUpdates = false;
                 EventBus.getDefault().post(new LocationFailureEvent("Location provider disabled"));
             }
         };
@@ -102,5 +115,39 @@ public class LocationWorker {
                 Constants.LOCATION_MIN_DISTANCE,
                 mLocationListener
         );
+        mIsDetermineUserLocationTriggered = true;
+        mIsListeningForUpdates = true;
+    }
+
+    /**
+     * Returns true if determineUserLocation() was be called at least once
+     * @return boolean isDetermineUserLocationTriggered
+     */
+    public boolean isDetermineUserLocationTriggered() {
+        return mIsDetermineUserLocationTriggered;
+    }
+
+    /**
+     * Returns true if LocationListener listening for updates from LocationManager
+     * @return boolean isListeningForUpdates
+     */
+    public boolean isListeningForUpdates() {
+        return mIsListeningForUpdates;
+    }
+
+    /**
+     * Returns last known user latitude
+     * @return double latitude
+     */
+    public double getLatitude() {
+        return mLatitude;
+    }
+
+    /**
+     * Returns last known user longitude
+     * @return double longitude
+     */
+    public double getLongitude() {
+        return mLongitude;
     }
 }
