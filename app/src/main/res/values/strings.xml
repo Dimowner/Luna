@@ -18,4 +18,5 @@
     <string name="jsonExceptionErrorMessage">Downloaded data is not a valid JSON</string>
     <string name="geocoderFailureErrorMessage">Failed to get geocoder place</string>
     <string name="networkFailureErrorMessage">Network error. Please check your internet connection</string>
+    <string name="waitingForLocationMessage">Waiting for location...</string>
 </resources>
