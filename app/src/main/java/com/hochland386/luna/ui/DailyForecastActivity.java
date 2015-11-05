@@ -34,11 +34,6 @@ public class DailyForecastActivity extends ListActivity {
     private final int LOCATION_PERMISSIONS_REQUEST_CODE = 1;
 
 //    Members
-    private LocationWorker mLocationWorker;
-    private NetworkWorker mNetworkWorker;
-    private ProvidersChecker mProvidersChecker;
-    private UrlBuilder mUrlBuilder;
-    private ResponseParser mResponseParser;
     private Forecast mForecast;
     private String[] mLocationPermissionsArray = {
             Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -51,11 +46,6 @@ public class DailyForecastActivity extends ListActivity {
         setContentView(R.layout.activity_daily_forecast);
 
 //        Members init
-        mLocationWorker = LocationWorker.getInstance();
-        mNetworkWorker = NetworkWorker.getInstance();
-        mProvidersChecker = ProvidersChecker.getInstance();
-        mUrlBuilder = UrlBuilder.getInstance();
-        mResponseParser = ResponseParser.getInstance();
         mForecast = new Forecast();
 
 //        Register for events
@@ -94,7 +84,7 @@ public class DailyForecastActivity extends ListActivity {
      * Checks for location and network availability and call getWeatherData() if everything is OK
      */
     private void refreshWeather() {
-        if (mProvidersChecker.isLocationAndNetworkAvailable(this)) {
+        if (ProvidersChecker.getInstance().isLocationAndNetworkAvailable(this)) {
             getWeatherData();
         } else {
             Toast.makeText(
@@ -117,7 +107,8 @@ public class DailyForecastActivity extends ListActivity {
      * then do nothing, just waiting for Location Event.
      */
     private void getWeatherData() {
-        if (!mLocationWorker.isDetermineUserLocationTriggered() && !mLocationWorker.isListeningForUpdates()) {
+        if (!LocationWorker.getInstance().isDetermineUserLocationTriggered()
+                && !LocationWorker.getInstance().isListeningForUpdates()) {
         /* Checks runtime permissions. Request permissions if it's not already granted */
             if (ContextCompat.checkSelfPermission(
                     DailyForecastActivity.this,
@@ -137,7 +128,8 @@ public class DailyForecastActivity extends ListActivity {
             /* Yay! Required Permissions available. We can proceed */
                 determineUserLocation();
             }
-        } else if (mLocationWorker.isDetermineUserLocationTriggered() && !mLocationWorker.isListeningForUpdates()) {
+        } else if (LocationWorker.getInstance().isDetermineUserLocationTriggered()
+                && !LocationWorker.getInstance().isListeningForUpdates()) {
             downloadForecastWeatherData();
         } else {
             Toast.makeText(
@@ -153,8 +145,8 @@ public class DailyForecastActivity extends ListActivity {
      * if everything is OK, otherwise shows toast with error
      */
     private void determineUserLocation() {
-        if (mProvidersChecker.isLocationEnabled(this)) {
-            mLocationWorker.determineUserLocation(this);
+        if (ProvidersChecker.getInstance().isLocationEnabled(this)) {
+            LocationWorker.getInstance().determineUserLocation(this);
         } else {
             Toast.makeText(
                     this,
@@ -170,12 +162,12 @@ public class DailyForecastActivity extends ListActivity {
      * if network are unavailable
      */
     private void downloadForecastWeatherData() {
-        if (mProvidersChecker.isNetworkAvailable(this)) {
-            String forecastWeatherUrl = mUrlBuilder.buildForecastWeatherUrl(
-                    String.valueOf(mLocationWorker.getLatitude()),
-                    String.valueOf(mLocationWorker.getLongitude())
+        if (ProvidersChecker.getInstance().isNetworkAvailable(this)) {
+            String forecastWeatherUrl = UrlBuilder.getInstance().buildForecastWeatherUrl(
+                    String.valueOf(LocationWorker.getInstance().getLatitude()),
+                    String.valueOf(LocationWorker.getInstance().getLongitude())
             );
-            mNetworkWorker.downloadForecastWeatherData(forecastWeatherUrl);
+            NetworkWorker.getInstance().downloadForecastWeatherData(forecastWeatherUrl);
         } else {
             Toast.makeText(
                     this,
@@ -252,7 +244,7 @@ public class DailyForecastActivity extends ListActivity {
     public void onEvent(ForecastWeatherResponseEvent ev) {
         String response = ev.getResponse();
         try {
-            mForecast = mResponseParser.parseForecastWeatherResponse(response);
+            mForecast = ResponseParser.getInstance().parseForecastWeatherResponse(response);
         } catch (JSONException e) {
             e.printStackTrace();
             Toast.makeText(
