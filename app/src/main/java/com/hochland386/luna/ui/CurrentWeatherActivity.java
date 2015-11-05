@@ -20,7 +20,6 @@ import com.hochland386.luna.bus.CurrentWeatherResponseEvent;
 import com.hochland386.luna.bus.LocationChangedEvent;
 import com.hochland386.luna.bus.LocationFailureEvent;
 import com.hochland386.luna.model.CurrentWeather;
-import com.hochland386.luna.utils.Constants;
 import com.hochland386.luna.utils.GeocoderUtils;
 import com.hochland386.luna.utils.ProvidersChecker;
 import com.hochland386.luna.utils.ResponseParser;
@@ -47,8 +46,6 @@ public class CurrentWeatherActivity extends AppCompatActivity {
             humidityValueTv, pressureValueTv, weatherSummaryTv;
 
 //    Members
-    private String mLatitudeAsString = String.valueOf(Constants.DEFAULT_LATITUDE);
-    private String mLongitudeAsString = String.valueOf(Constants.DEFAULT_LONGITUDE);
     private CurrentWeather mCurrentWeather;
     private String[] mLocationPermissionsArray = {
             Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -200,12 +197,13 @@ public class CurrentWeatherActivity extends AppCompatActivity {
     //    Implements Location events
     public void onEvent(LocationChangedEvent ev) {
         Location location = ev.getLocation();
-        /* Override member variables with new LAT & LONG values */
-        mLatitudeAsString = String.valueOf(location.getLatitude());
-        mLongitudeAsString = String.valueOf(location.getLongitude());
         /* Build currentWeatherUrl and download data from server */
+        LocationWorker locationWorker = LocationWorker.getInstance();
         UrlBuilder urlBuilder = UrlBuilder.getInstance();
-        String currentWeatherUrl = urlBuilder.buildCurrentWeatherUrl(mLatitudeAsString, mLongitudeAsString);
+        String currentWeatherUrl = urlBuilder.buildCurrentWeatherUrl(
+                String.valueOf(locationWorker.getLatitude()),
+                String.valueOf(location.getLongitude())
+        );
         NetworkWorker networkWorker = NetworkWorker.getInstance();
         networkWorker.downloadCurrentWeatherData(currentWeatherUrl);
     }
@@ -218,8 +216,12 @@ public class CurrentWeatherActivity extends AppCompatActivity {
                 Toast.LENGTH_LONG
         ).show();
         /* Build currentWeatherUrl and download data from server */
+        LocationWorker locationWorker = LocationWorker.getInstance();
         UrlBuilder urlBuilder = UrlBuilder.getInstance();
-        String currentWeatherUrl = urlBuilder.buildCurrentWeatherUrl(mLatitudeAsString, mLongitudeAsString);
+        String currentWeatherUrl = urlBuilder.buildCurrentWeatherUrl(
+                String.valueOf(locationWorker.getLatitude()),
+                String.valueOf(locationWorker.getLongitude())
+        );
         NetworkWorker networkWorker = NetworkWorker.getInstance();
         networkWorker.downloadCurrentWeatherData(currentWeatherUrl);
     }
@@ -237,12 +239,13 @@ public class CurrentWeatherActivity extends AppCompatActivity {
             mCurrentWeather = new CurrentWeather();
         }
         /* Trying to reverse LAT & LONG into a place and set it as CurrentWeather place */
-        double latitudeAsDouble = Double.parseDouble(mLatitudeAsString);
-        double longitudeAsDouble = Double.parseDouble(mLongitudeAsString);
+        LocationWorker locationWorker = LocationWorker.getInstance();
+        double latitude = locationWorker.getLatitude();
+        double longitude = locationWorker.getLongitude();
         try {
             GeocoderUtils geocoderUtils = GeocoderUtils.getInstance();
             List<Address> addresses = geocoderUtils.getPlaceFromLocation(
-                    this, latitudeAsDouble, longitudeAsDouble);
+                    this, latitude, longitude);
             if (addresses.size() > 0) {
                 if (addresses.get(0).getLocality() != null) {
                     mCurrentWeather.setPlace(addresses.get(0).getLocality());
