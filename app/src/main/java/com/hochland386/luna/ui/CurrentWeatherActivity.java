@@ -266,8 +266,10 @@ public class CurrentWeatherActivity extends AppCompatActivity {
                     LocationWorker.getInstance().getLongitude()
             );
             if (addresses.size() > 0) {
-                String geocoderPlace = addresses.get(0).getLocality();
-                mCurrentWeather.setPlace(geocoderPlace);
+                if (addresses.get(0).getLocality() != null) {
+                    String geocoderPlace = addresses.get(0).getLocality();
+                    mCurrentWeather.setPlace(geocoderPlace);
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
