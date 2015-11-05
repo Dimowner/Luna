@@ -63,7 +63,9 @@ public class LocationWorker {
      * Trying to determine user location using suitable provider.
      * By default, the priority is given to POWER_LOW requirements which means in most cases
      * network location provider will be used. If for some reasons location not found within
-     * 45 seconds then LocationFailureEvent will be posted
+     * 45 seconds then LocationFailureEvent will be posted. LocationChangedEvent will be posted
+     * when location determined. You can access latest location data by calling getLatitude() and
+     * getLongitude() methods
      * @param context context
      */
     public void determineUserLocation(Context context) {
@@ -79,7 +81,7 @@ public class LocationWorker {
                 mIsListeningForUpdates = false;
                 mLatitude = location.getLatitude();
                 mLongitude = location.getLongitude();
-                EventBus.getDefault().post(new LocationChangedEvent(location));
+                EventBus.getDefault().post(new LocationChangedEvent());
             }
 
             @Override
