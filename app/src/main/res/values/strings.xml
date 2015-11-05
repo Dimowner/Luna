@@ -15,4 +15,7 @@
     <string name="noLocationOrNetworkErrorMessage">Location or network are unavailable</string>
     <string name="permissionsDeniedErrorMessage">Oops. Permissions denied :(</string>
     <string name="forecastListEmptyTv">Fetching Data...</string>
+    <string name="jsonExceptionErrorMessage">Downloaded data is not a valid JSON</string>
+    <string name="geocoderFailureErrorMessage">Failed to get geocoder place</string>
+    <string name="networkFailureErrorMessage">Network error. Please check your internet connection</string>
 </resources>
