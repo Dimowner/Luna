@@ -1,6 +1,7 @@
 package com.hochland386.luna.ui;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Location;
@@ -75,6 +76,18 @@ public class CurrentWeatherActivity extends AppCompatActivity {
             }
         });
 
+//        Set onClickListener to temperatureTv
+        temperatureTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent showForecastActivityIntent = new Intent(
+                        CurrentWeatherActivity.this,
+                        DailyForecastActivity.class
+                );
+                startActivity(showForecastActivityIntent);
+            }
+        });
+
 //        Register for events
         EventBus.getDefault().register(this);
 
@@ -89,16 +102,20 @@ public class CurrentWeatherActivity extends AppCompatActivity {
      */
     private void refreshWeather() {
         /* Checks runtime permissions. Request permissions if it's not already granted */
-        if (ContextCompat.checkSelfPermission(CurrentWeatherActivity.this,
+        if (ContextCompat.checkSelfPermission(
+                CurrentWeatherActivity.this,
                 mLocationPermissionsArray[0])
                 != PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(CurrentWeatherActivity.this,
+                && ContextCompat.checkSelfPermission(
+                CurrentWeatherActivity.this,
                 mLocationPermissionsArray[1])
                 != PackageManager.PERMISSION_GRANTED) {
                 /* Warning! No permissions at this point of the time. Requesting ... */
-            ActivityCompat.requestPermissions(CurrentWeatherActivity.this,
+            ActivityCompat.requestPermissions(
+                    CurrentWeatherActivity.this,
                     mLocationPermissionsArray,
-                    LOCATION_PERMISSIONS_REQUEST_CODE);
+                    LOCATION_PERMISSIONS_REQUEST_CODE
+            );
         } else {
                 /* Yay! Required Permissions granted. Now we can proceed */
             getCurrentWeather();
