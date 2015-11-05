@@ -46,12 +46,6 @@ public class CurrentWeatherActivity extends AppCompatActivity {
             humidityValueTv, pressureValueTv, weatherSummaryTv;
 
 //    Members
-    private LocationWorker mLocationWorker;
-    private NetworkWorker mNetworkWorker;
-    private ProvidersChecker mProvidersChecker;
-    private UrlBuilder mUrlBuilder;
-    private ResponseParser mResponseParser;
-    private GeocoderUtils mGeocoderUtils;
     private CurrentWeather mCurrentWeather;
     private String[] mLocationPermissionsArray = {
             Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -74,12 +68,6 @@ public class CurrentWeatherActivity extends AppCompatActivity {
         weatherSummaryTv = (TextView) findViewById(R.id.weatherSummaryTv);
 
 //        Members init
-        mLocationWorker = LocationWorker.getInstance();
-        mNetworkWorker = NetworkWorker.getInstance();
-        mProvidersChecker = ProvidersChecker.getInstance();
-        mUrlBuilder = UrlBuilder.getInstance();
-        mResponseParser = ResponseParser.getInstance();
-        mGeocoderUtils = GeocoderUtils.getInstance();
         mCurrentWeather = new CurrentWeather();
 
 //        Set onClickListener to refreshIb
@@ -113,7 +101,7 @@ public class CurrentWeatherActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (mLocationWorker.isListeningForUpdates()) {
+        if (LocationWorker.getInstance().isListeningForUpdates()) {
             toggleRefreshAnimationOn();
         }
     }
@@ -140,7 +128,7 @@ public class CurrentWeatherActivity extends AppCompatActivity {
      * Checks for location and network availability and call getWeatherData() if everything is OK
      */
     private void refreshWeather() {
-        if (mProvidersChecker.isLocationAndNetworkAvailable(this)) {
+        if (ProvidersChecker.getInstance().isLocationAndNetworkAvailable(this)) {
             getWeatherData();
         } else {
             Toast.makeText(
@@ -182,9 +170,9 @@ public class CurrentWeatherActivity extends AppCompatActivity {
      * if everything is OK, otherwise shows toast with error
      */
     private void determineUserLocation() {
-        if (mProvidersChecker.isLocationEnabled(this)) {
+        if (ProvidersChecker.getInstance().isLocationEnabled(this)) {
             toggleRefreshAnimationOn();
-            mLocationWorker.determineUserLocation(this);
+            LocationWorker.getInstance().determineUserLocation(this);
         } else {
             toggleRefreshAnimationOff();
             Toast.makeText(
@@ -201,13 +189,13 @@ public class CurrentWeatherActivity extends AppCompatActivity {
      * if network are unavailable
      */
     private void downloadCurrentWeatherData() {
-        if (mProvidersChecker.isNetworkAvailable(this)) {
+        if (ProvidersChecker.getInstance().isNetworkAvailable(this)) {
             toggleRefreshAnimationOn();
-            String currentWeatherUrl = mUrlBuilder.buildCurrentWeatherUrl(
-                    String.valueOf(mLocationWorker.getLatitude()),
-                    String.valueOf(mLocationWorker.getLongitude())
+            String currentWeatherUrl = UrlBuilder.getInstance().buildCurrentWeatherUrl(
+                    String.valueOf(LocationWorker.getInstance().getLatitude()),
+                    String.valueOf(LocationWorker.getInstance().getLongitude())
             );
-            mNetworkWorker.downloadCurrentWeatherData(currentWeatherUrl);
+            NetworkWorker.getInstance().downloadCurrentWeatherData(currentWeatherUrl);
         } else {
             toggleRefreshAnimationOff();
             Toast.makeText(
@@ -270,12 +258,12 @@ public class CurrentWeatherActivity extends AppCompatActivity {
     public void onEvent(CurrentWeatherResponseEvent ev) {
         String response = ev.getResponse();
         try {
-            mCurrentWeather = mResponseParser.parseCurrentWeatherResponse(response);
+            mCurrentWeather = ResponseParser.getInstance().parseCurrentWeatherResponse(response);
             /* Trying to get place from LAT & LONG and set it to mCurrentWeather object */
-            List<Address> addresses = mGeocoderUtils.getPlaceFromLocation(
+            List<Address> addresses = GeocoderUtils.getInstance().getPlaceFromLocation(
                     this,
-                    mLocationWorker.getLatitude(),
-                    mLocationWorker.getLongitude()
+                    LocationWorker.getInstance().getLatitude(),
+                    LocationWorker.getInstance().getLongitude()
             );
             if (addresses.size() > 0) {
                 String geocoderPlace = addresses.get(0).getLocality();
