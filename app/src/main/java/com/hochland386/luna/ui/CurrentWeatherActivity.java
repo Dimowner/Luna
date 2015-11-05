@@ -109,6 +109,16 @@ public class CurrentWeatherActivity extends AppCompatActivity {
         refreshWeather();
     }
 
+//    Implements onResume() lifecycle method
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mLocationWorker.isListeningForUpdates()) {
+            toggleRefreshAnimationOn();
+        }
+    }
+
+
 //    Private interface
     /**
      * Hide refresh ImageButton and shows refresh ProgressBar instead
