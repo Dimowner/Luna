@@ -120,11 +120,11 @@ public class CurrentWeatherActivity extends AppCompatActivity {
     }
 
     /**
-     * Checks for location and network availability and call getWeatherData() if everything is OK
+     * Checks for location and network availability and call checkRuntimePermissions() if everything is OK
      */
     private void refreshWeather() {
         if (ProvidersChecker.getInstance().isLocationAndNetworkAvailable(this)) {
-            getWeatherData();
+            checkRuntimePermissions();
         } else {
             Toast.makeText(
                     this,
@@ -135,10 +135,10 @@ public class CurrentWeatherActivity extends AppCompatActivity {
     }
 
     /**
-     * Checks for runtime permissions and call determineUserLocation() if it's granted
+     * Checks for runtime permissions and call getUserLocation() if it's granted
      * or request permissions if it's not yet granted.
      */
-    private void getWeatherData() {
+    private void checkRuntimePermissions() {
     /* Checks runtime permissions. Request permissions if it's not already granted */
         if (ContextCompat.checkSelfPermission(
                 CurrentWeatherActivity.this,
@@ -156,7 +156,7 @@ public class CurrentWeatherActivity extends AppCompatActivity {
             );
         } else {
         /* Yay! Required Permissions available. We can proceed */
-            determineUserLocation();
+            getUserLocation();
         }
     }
 
@@ -164,7 +164,7 @@ public class CurrentWeatherActivity extends AppCompatActivity {
      * Checks availability of location services and request location updates from LocationWorker
      * if everything is OK, otherwise shows toast with error
      */
-    private void determineUserLocation() {
+    private void getUserLocation() {
         if (ProvidersChecker.getInstance().isLocationEnabled(this)) {
             toggleRefreshAnimationOn();
             LocationWorker.getInstance().determineUserLocation(this);
@@ -183,7 +183,7 @@ public class CurrentWeatherActivity extends AppCompatActivity {
      * and download current weather data from server. Toast with error message will be shown
      * if network are unavailable
      */
-    private void downloadCurrentWeatherData() {
+    private void getCurrentWeatherData() {
         if (ProvidersChecker.getInstance().isNetworkAvailable(this)) {
             toggleRefreshAnimationOn();
             String currentWeatherUrl = UrlBuilder.getInstance().buildCurrentWeatherUrl(
@@ -209,7 +209,7 @@ public class CurrentWeatherActivity extends AppCompatActivity {
                 /* If request is cancelled, the result arrays are empty. */
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     /* Permissions was granted, yay! */
-                    determineUserLocation();
+                    getUserLocation();
                 } else {
                     /* Permissions denied! Shows toast with error */
                     Toast.makeText(
@@ -224,14 +224,14 @@ public class CurrentWeatherActivity extends AppCompatActivity {
 
 //    Handle Location events
     /**
-     * Call downloadCurrentWeatherData() when location determined
+     * Call getCurrentWeatherData() when location determined
      */
     public void onEvent(LocationChangedEvent ev) {
-        downloadCurrentWeatherData();
+        getCurrentWeatherData();
     }
 
     /**
-     * Call downloadCurrentWeatherData() even if location won't determined. This will get weather
+     * Call getCurrentWeatherData() even if location won't determined. This will get weather
      * data for last known location or for default location if there is no last known location at all
      */
     public void onEvent(LocationFailureEvent ev) {
@@ -241,7 +241,7 @@ public class CurrentWeatherActivity extends AppCompatActivity {
                 ev.getFailureMessage(),
                 Toast.LENGTH_LONG
         ).show();
-        downloadCurrentWeatherData();
+        getCurrentWeatherData();
     }
 
 //    Handle Network events
