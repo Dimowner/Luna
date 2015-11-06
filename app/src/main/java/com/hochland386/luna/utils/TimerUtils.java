@@ -36,7 +36,9 @@ public class TimerUtils {
      * If a timeout occurs TimerTimeoutEvent will be posted
      */
     public void startLocationTimeoutTimer() {
-        mLocationTimer = new CountDownTimer(Constants.LOCATION_TIMEOUT, Constants.COUNT_DOWN_INTERVAL) {
+        mLocationTimer = new CountDownTimer(
+                Constants.getInstance().getLocationTimeout(),
+                Constants.getInstance().getCountDownInterval()) {
             @Override
             public void onTick(long millisUntilFinished) {
 //                Do nothing :)
