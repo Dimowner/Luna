@@ -77,11 +77,11 @@ public class DailyForecastActivity extends ListActivity {
 
 //    Private interface
     /**
-     * Checks for location and network availability and call getWeatherData() if everything is OK
+     * Checks for location and network availability and call checkRuntimePermissions() if everything is OK
      */
     private void refreshWeather() {
         if (ProvidersChecker.getInstance().isLocationAndNetworkAvailable(this)) {
-            getWeatherData();
+            checkRuntimePermissions();
         } else {
             Toast.makeText(
                     this,
@@ -92,17 +92,17 @@ public class DailyForecastActivity extends ListActivity {
     }
 
     /**
-     * Checks Location status. If LocationWorker.determineUserLocation() never be called and
-     * device don't listening for location updates then call determineUserLocation().
+     * Checks Location status. If LocationWorker.getUserLocation() never be called and
+     * device don't listening for location updates then call getUserLocation().
      *
-     * If LocationWorker.determineUserLocation() was be called at least once and device don't
+     * If LocationWorker.getUserLocation() was be called at least once and device don't
      * listening for location updates then assuming that location already available and we can
      * use it.
      *
      * Finally. If device is listening for location updates but there is no location available
      * then do nothing, just waiting for Location Event.
      */
-    private void getWeatherData() {
+    private void checkRuntimePermissions() {
         if (!LocationWorker.getInstance().isDetermineUserLocationTriggered()
                 && !LocationWorker.getInstance().isListeningForUpdates()) {
         /* Checks runtime permissions. Request permissions if it's not already granted */
@@ -122,11 +122,11 @@ public class DailyForecastActivity extends ListActivity {
                 );
             } else {
             /* Yay! Required Permissions available. We can proceed */
-                determineUserLocation();
+                getUserLocation();
             }
         } else if (LocationWorker.getInstance().isDetermineUserLocationTriggered()
                 && !LocationWorker.getInstance().isListeningForUpdates()) {
-            downloadForecastWeatherData();
+            getForecastWeatherData();
         } else {
             Toast.makeText(
                     this,
@@ -140,7 +140,7 @@ public class DailyForecastActivity extends ListActivity {
      * Checks availability of location services and request location updates from LocationWorker
      * if everything is OK, otherwise shows toast with error
      */
-    private void determineUserLocation() {
+    private void getUserLocation() {
         if (ProvidersChecker.getInstance().isLocationEnabled(this)) {
             LocationWorker.getInstance().determineUserLocation(this);
         } else {
@@ -157,7 +157,7 @@ public class DailyForecastActivity extends ListActivity {
      * and download forecast weather data from server. Toast with error message will be shown
      * if network are unavailable
      */
-    private void downloadForecastWeatherData() {
+    private void getForecastWeatherData() {
         if (ProvidersChecker.getInstance().isNetworkAvailable(this)) {
             String forecastWeatherUrl = UrlBuilder.getInstance().buildForecastWeatherUrl(
                     String.valueOf(LocationWorker.getInstance().getLatitude()),
@@ -197,7 +197,7 @@ public class DailyForecastActivity extends ListActivity {
                 /* If request is cancelled, the result arrays are empty. */
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     /* Permissions was granted, yay! */
-                    determineUserLocation();
+                    getUserLocation();
                 } else {
                     /* Permissions denied! Shows toast with error */
                     Toast.makeText(
@@ -215,7 +215,7 @@ public class DailyForecastActivity extends ListActivity {
      * Call downloadCurrentWeatherData() when location determined
      */
     public void onEvent(LocationChangedEvent ev) {
-        downloadForecastWeatherData();
+        getForecastWeatherData();
     }
 
     /**
@@ -229,7 +229,7 @@ public class DailyForecastActivity extends ListActivity {
                 ev.getFailureMessage(),
                 Toast.LENGTH_LONG
         ).show();
-        downloadForecastWeatherData();
+        getForecastWeatherData();
     }
 
 //    Handle Network events
