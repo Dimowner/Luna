@@ -36,7 +36,7 @@ public class UrlBuilder {
                         "&appid=%s",
                 latitude,
                 longitude,
-                Constants.API_KEY
+                Constants.getInstance().getApiKey()
         );
     }
 
@@ -56,8 +56,8 @@ public class UrlBuilder {
                         "&appid=%s",
                 latitude,
                 longitude,
-                Constants.FORECAST_COUNT,
-                Constants.API_KEY
+                Constants.getInstance().getForecastCount(),
+                Constants.getInstance().getApiKey()
         );
     }
 }
