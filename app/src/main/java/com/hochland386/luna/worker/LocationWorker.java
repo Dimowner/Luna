@@ -113,8 +113,8 @@ public class LocationWorker {
         timerUtils.startLocationTimeoutTimer();
         mLocationManager.requestLocationUpdates(
                 locationProvider,
-                Constants.LOCATION_MIN_TIME,
-                Constants.LOCATION_MIN_DISTANCE,
+                Constants.getInstance().getLocationMinTime(),
+                Constants.getInstance().getLocationMinDistance(),
                 mLocationListener
         );
         mIsDetermineUserLocationTriggered = true;
