@@ -1,6 +1,5 @@
 package com.hochland386.luna.ui;
 
-import android.Manifest;
 import android.app.ListActivity;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -18,6 +17,7 @@ import com.hochland386.luna.bus.LocationChangedEvent;
 import com.hochland386.luna.bus.LocationFailureEvent;
 import com.hochland386.luna.model.DailyWeather;
 import com.hochland386.luna.model.Forecast;
+import com.hochland386.luna.utils.Constants;
 import com.hochland386.luna.utils.ProvidersChecker;
 import com.hochland386.luna.utils.ResponseParser;
 import com.hochland386.luna.utils.UrlBuilder;
@@ -35,10 +35,6 @@ public class DailyForecastActivity extends ListActivity {
 
 //    Members
     private Forecast mForecast;
-    private String[] mLocationPermissionsArray = {
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.ACCESS_FINE_LOCATION
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,16 +108,16 @@ public class DailyForecastActivity extends ListActivity {
         /* Checks runtime permissions. Request permissions if it's not already granted */
             if (ContextCompat.checkSelfPermission(
                     DailyForecastActivity.this,
-                    mLocationPermissionsArray[0])
+                    Constants.getInstance().getLocationPermissionsArray()[0])
                     != PackageManager.PERMISSION_GRANTED
                     && ContextCompat.checkSelfPermission(
                     DailyForecastActivity.this,
-                    mLocationPermissionsArray[1])
+                    Constants.getInstance().getLocationPermissionsArray()[1])
                     != PackageManager.PERMISSION_GRANTED) {
                 /* Warning! No permissions at this point of the time. Requesting ... */
                 ActivityCompat.requestPermissions(
                         DailyForecastActivity.this,
-                        mLocationPermissionsArray,
+                        Constants.getInstance().getLocationPermissionsArray(),
                         LOCATION_PERMISSIONS_REQUEST_CODE
                 );
             } else {

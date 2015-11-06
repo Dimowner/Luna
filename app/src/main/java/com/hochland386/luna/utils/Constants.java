@@ -1,5 +1,7 @@
 package com.hochland386.luna.utils;
 
+import android.Manifest;
+
 /**
  * Created by vitaly on 10/17/15.
  * This class provides constants for whole application.
@@ -13,6 +15,10 @@ public class Constants {
     private float mLocationMinDistance;
     private String mApiKey;
     private String mForecastCount;
+    private String[] mLocationPermissionsArray = {
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION
+    };
 
 //    Make default constructor private
     private Constants() {
@@ -81,5 +87,14 @@ public class Constants {
      */
     public String getForecastCount() {
         return mForecastCount;
+    }
+
+    /**
+     * Returns array with location permissions which requires for application location features
+     * functionality
+     * @return String[] locationPermissionsArray
+     */
+    public String[] getLocationPermissionsArray() {
+        return mLocationPermissionsArray;
     }
 }

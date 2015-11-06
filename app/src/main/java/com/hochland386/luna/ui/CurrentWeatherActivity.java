@@ -1,6 +1,5 @@
 package com.hochland386.luna.ui;
 
-import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -20,6 +19,7 @@ import com.hochland386.luna.bus.CurrentWeatherResponseEvent;
 import com.hochland386.luna.bus.LocationChangedEvent;
 import com.hochland386.luna.bus.LocationFailureEvent;
 import com.hochland386.luna.model.CurrentWeather;
+import com.hochland386.luna.utils.Constants;
 import com.hochland386.luna.utils.GeocoderUtils;
 import com.hochland386.luna.utils.ProvidersChecker;
 import com.hochland386.luna.utils.ResponseParser;
@@ -47,10 +47,6 @@ public class CurrentWeatherActivity extends AppCompatActivity {
 
 //    Members
     private CurrentWeather mCurrentWeather;
-    private String[] mLocationPermissionsArray = {
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.ACCESS_FINE_LOCATION
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,7 +102,6 @@ public class CurrentWeatherActivity extends AppCompatActivity {
         }
     }
 
-
 //    Private interface
     /**
      * Hide refresh ImageButton and shows refresh ProgressBar instead
@@ -147,16 +142,16 @@ public class CurrentWeatherActivity extends AppCompatActivity {
     /* Checks runtime permissions. Request permissions if it's not already granted */
         if (ContextCompat.checkSelfPermission(
                 CurrentWeatherActivity.this,
-                mLocationPermissionsArray[0])
+                Constants.getInstance().getLocationPermissionsArray()[0])
                 != PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(
                 CurrentWeatherActivity.this,
-                mLocationPermissionsArray[1])
+                Constants.getInstance().getLocationPermissionsArray()[1])
                 != PackageManager.PERMISSION_GRANTED) {
                 /* Warning! No permissions at this point of the time. Requesting ... */
             ActivityCompat.requestPermissions(
                     CurrentWeatherActivity.this,
-                    mLocationPermissionsArray,
+                    Constants.getInstance().getLocationPermissionsArray(),
                     LOCATION_PERMISSIONS_REQUEST_CODE
             );
         } else {
