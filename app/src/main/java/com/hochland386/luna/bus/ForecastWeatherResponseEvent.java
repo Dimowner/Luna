@@ -5,17 +5,19 @@ package com.hochland386.luna.bus;
  */
 public class ForecastWeatherResponseEvent {
 
-//    Members
+    //    Members
     private String mResponse;
 
-//    Constructor
+    //    Constructor
     public ForecastWeatherResponseEvent(String response) {
         mResponse = response;
     }
 
 //    Getters
+
     /**
      * Returns forecast weather JSON data as string
+     *
      * @return String response
      */
     public String getResponse() {

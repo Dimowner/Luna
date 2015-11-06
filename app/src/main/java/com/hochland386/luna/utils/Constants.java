@@ -8,7 +8,7 @@ import android.Manifest;
  */
 public class Constants {
 
-//    Members
+    //    Members
     private int mLocationTimeout;
     private int mCountDownInterval;
     private long mLocationMinTime;
@@ -20,7 +20,7 @@ public class Constants {
             Manifest.permission.ACCESS_FINE_LOCATION
     };
 
-//    Make default constructor private
+    //    Make default constructor private
     private Constants() {
         mLocationTimeout = 45000;
         mCountDownInterval = 1000;
@@ -30,27 +30,25 @@ public class Constants {
         mForecastCount = "10";
     }
 
-//    Singleton wrapper
-    private static class Loader {
-        static Constants instance = new Constants();
-    }
-
-//    Implements getInstance() method
+    //    Implements getInstance() method
     public static Constants getInstance() {
         return Loader.instance;
     }
 
-//    Public interface
     /**
      * Returns default location timeout in milliseconds
+     *
      * @return int locationTimeout
      */
     public int getLocationTimeout() {
         return mLocationTimeout;
     }
 
+//    Public interface
+
     /**
      * Returns default count down interval in milliseconds
+     *
      * @return int countDownInterval
      */
     public int getCountDownInterval() {
@@ -59,6 +57,7 @@ public class Constants {
 
     /**
      * Returns default location min time
+     *
      * @return long locationMinTime
      */
     public long getLocationMinTime() {
@@ -67,6 +66,7 @@ public class Constants {
 
     /**
      * Returns default location min distance
+     *
      * @return float locationMinDistance
      */
     public float getLocationMinDistance() {
@@ -75,6 +75,7 @@ public class Constants {
 
     /**
      * Returns API key for signed request as string
+     *
      * @return String apiKey
      */
     public String getApiKey() {
@@ -83,6 +84,7 @@ public class Constants {
 
     /**
      * Returns default days count for forecast request
+     *
      * @return String forecastCount
      */
     public String getForecastCount() {
@@ -92,9 +94,15 @@ public class Constants {
     /**
      * Returns array with location permissions which requires for application location features
      * functionality
+     *
      * @return String[] locationPermissionsArray
      */
     public String[] getLocationPermissionsArray() {
         return mLocationPermissionsArray;
+    }
+
+    //    Singleton wrapper
+    private static class Loader {
+        static Constants instance = new Constants();
     }
 }

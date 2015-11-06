@@ -14,23 +14,18 @@ import org.json.JSONObject;
  */
 public class ResponseParser {
 
-//    Make default constructor private
+    //    Make default constructor private
     private ResponseParser() {
     }
 
-//    Singleton wrapper
-    private static class Loader {
-        static ResponseParser instance = new ResponseParser();
-    }
-
-//    Implements getInstance() method
+    //    Implements getInstance() method
     public static ResponseParser getInstance() {
         return Loader.instance;
     }
 
-//    Public interface
     /**
      * Parses JSON response from server, build CurrentWeather object and return it
+     *
      * @param response JSON response from server
      * @return CurrentWeather currentWeather
      * @throws JSONException thrown if provided data is not valid JSON
@@ -55,8 +50,11 @@ public class ResponseParser {
         return new CurrentWeather(temperature, humidity, pressure, summary, place);
     }
 
+//    Public interface
+
     /**
      * Parses JSON response from server, build Forecast object and return it
+     *
      * @param response JSON response from server
      * @return Forecast forecast
      * @throws JSONException thrown if provided data is not valid JSON
@@ -89,5 +87,10 @@ public class ResponseParser {
             forecast.setDailyAtIndex(i, dailyWeather);
         }
         return forecast;
+    }
+
+    //    Singleton wrapper
+    private static class Loader {
+        static ResponseParser instance = new ResponseParser();
     }
 }

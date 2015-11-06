@@ -18,11 +18,11 @@ import com.hochland386.luna.utils.DateFormatUtils;
  */
 public class DailyForecastAdapter extends BaseAdapter {
 
-//    Members
+    //    Members
     private Context mContext;
     private Forecast mForecast;
 
-//    Constructor
+    //    Constructor
     public DailyForecastAdapter(Context context, Forecast forecast) {
         mContext = context;
         mForecast = forecast;
@@ -97,7 +97,7 @@ public class DailyForecastAdapter extends BaseAdapter {
         return convertView;
     }
 
-//    ViewHolder static class
+    //    ViewHolder static class
     private static class ViewHolder {
         TextView dailyDateTv;
         TextView dailyTemperatureTv;

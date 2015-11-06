@@ -12,23 +12,18 @@ import android.provider.Settings;
  */
 public class ProvidersChecker {
 
-//    Make default constructor private
+    //    Make default constructor private
     private ProvidersChecker() {
     }
 
-//    Singleton wrapper
-    private static class Loader {
-        static ProvidersChecker instance = new ProvidersChecker();
-    }
-
-//    Implements getInstance() method
+    //    Implements getInstance() method
     public static ProvidersChecker getInstance() {
         return Loader.instance;
     }
 
-//    Public interface
     /**
      * Returns true if location services enabled and available
+     *
      * @param context context
      * @return boolean isLocationEnabled
      */
@@ -39,8 +34,11 @@ public class ProvidersChecker {
         return !locationProviders.isEmpty();
     }
 
+//    Public interface
+
     /**
      * Returns true if any data network are available and connected
+     *
      * @param context context
      * @return boolean isOnline
      */
@@ -53,10 +51,16 @@ public class ProvidersChecker {
 
     /**
      * Returns true if location and network enabled and available on device. Otherwise returns false
+     *
      * @param context context
      * @return boolean isLocationAndNetworkAvailable
      */
     public boolean isLocationAndNetworkAvailable(Context context) {
         return isLocationEnabled(context) && isNetworkAvailable(context);
+    }
+
+    //    Singleton wrapper
+    private static class Loader {
+        static ProvidersChecker instance = new ProvidersChecker();
     }
 }

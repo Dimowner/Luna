@@ -12,24 +12,18 @@ import de.greenrobot.event.EventBus;
  */
 public class TimerUtils {
 
-//    Members
+    //    Members
     private CountDownTimer mLocationTimer;
 
-//    Make default constructor private
+    //    Make default constructor private
     private TimerUtils() {
     }
 
-//    Singleton wrapper
-    private static class Loader {
-        static TimerUtils instance = new TimerUtils();
-    }
-
-//    Implements getInstance() method
+    //    Implements getInstance() method
     public static TimerUtils getInstance() {
         return Loader.instance;
     }
 
-//    Public interface
     /**
      * Starts location timeout timer with default timeout and countdown interval values.
      * You can cancel this timer by calling cancelLocationTimeoutTimer();
@@ -52,10 +46,17 @@ public class TimerUtils {
         mLocationTimer.start();
     }
 
+//    Public interface
+
     /**
      * Cancel location timeout timer.
      */
     public void cancelLocationTimeoutTimer() {
         mLocationTimer.cancel();
+    }
+
+    //    Singleton wrapper
+    private static class Loader {
+        static TimerUtils instance = new TimerUtils();
     }
 }

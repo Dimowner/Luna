@@ -5,10 +5,10 @@ package com.hochland386.luna.model;
  */
 public class Forecast {
 
-//    Members
+    //    Members
     private DailyWeather[] mDailyWeathers;
 
-//    Constructors
+    //    Constructors
     public Forecast(DailyWeather[] dailyWeathers) {
         mDailyWeathers = dailyWeathers;
     }
@@ -20,14 +20,16 @@ public class Forecast {
         }
     }
 
-//    Override default constructor
+    //    Override default constructor
     public Forecast() {
         this(10);
     }
 
 //    Public interface
+
     /**
      * Returns the number of DailyWeather objects in collection
+     *
      * @return int dailiesCount
      */
     public int getForecastCount() {
@@ -36,6 +38,7 @@ public class Forecast {
 
     /**
      * Returns a DailyWeather object with passed index
+     *
      * @param index DailyWeather object index
      * @return DailyWeather dailyWeather
      */
@@ -45,7 +48,8 @@ public class Forecast {
 
     /**
      * Sets new DailyWeather object at passed index
-     * @param index DailyWeather object index
+     *
+     * @param index        DailyWeather object index
      * @param dailyWeather new DailyWeather object
      */
     public void setDailyAtIndex(int index, DailyWeather dailyWeather) {

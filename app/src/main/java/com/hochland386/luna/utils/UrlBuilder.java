@@ -6,24 +6,19 @@ package com.hochland386.luna.utils;
  */
 public class UrlBuilder {
 
-//    Make default constructor private
+    //    Make default constructor private
     private UrlBuilder() {
     }
 
-//    Singleton wrapper
-    private static class Loader {
-        static UrlBuilder instance = new UrlBuilder();
-    }
-
-//    Implements getInstance() method
+    //    Implements getInstance() method
     public static UrlBuilder getInstance() {
         return Loader.instance;
     }
 
-//    Public interface
     /**
      * Returns the URL suitable for obtaining current weather data from the server.
-     * @param latitude User latitude
+     *
+     * @param latitude  User latitude
      * @param longitude User longitude
      * @return String currentWeatherUrl
      */
@@ -40,9 +35,12 @@ public class UrlBuilder {
         );
     }
 
+//    Public interface
+
     /**
      * Returns the URL suitable for obtaining forecast weather data from server.
-     * @param latitude User latitude
+     *
+     * @param latitude  User latitude
      * @param longitude User longitude
      * @return String forecastWeatherUrl
      */
@@ -59,5 +57,10 @@ public class UrlBuilder {
                 Constants.getInstance().getForecastCount(),
                 Constants.getInstance().getApiKey()
         );
+    }
+
+    //    Singleton wrapper
+    private static class Loader {
+        static UrlBuilder instance = new UrlBuilder();
     }
 }

@@ -5,13 +5,13 @@ package com.hochland386.luna.model;
  */
 public abstract class Weather {
 
-//    Members
+    //    Members
     private int mTemperature;
     private int mHumidity;
     private int mPressure;
     private String mSummary;
 
-//    Constructor
+    //    Constructor
     public Weather(int temperature, int humidity, int pressure, String summary) {
         mTemperature = temperature;
         mHumidity = humidity;
@@ -19,14 +19,16 @@ public abstract class Weather {
         mSummary = summary;
     }
 
-//    Override default constructor
+    //    Override default constructor
     public Weather() {
         this(0, 0, 0, "No data");
     }
 
 //    Final getters
+
     /**
      * Returns temperature
+     *
      * @return int temperature
      */
     public final int getTemperature() {
@@ -35,6 +37,7 @@ public abstract class Weather {
 
     /**
      * Returns humidity
+     *
      * @return int humidity
      */
     public final int getHumidity() {
@@ -43,6 +46,7 @@ public abstract class Weather {
 
     /**
      * Returns pressure in hectopascals
+     *
      * @return int pressure
      */
     public final int getPressure() {
@@ -51,6 +55,7 @@ public abstract class Weather {
 
     /**
      * Returns weather summary
+     *
      * @return String summary
      */
     public final String getSummary() {

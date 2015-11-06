@@ -23,15 +23,7 @@ import de.greenrobot.event.EventBus;
 @SuppressWarnings("ResourceType")
 public class LocationWorker {
 
-    //    Handle TimerTimeoutEvent
-    public void onEvent(TimerTimeoutEvent ev) {
-        /* Remove updates from listener and post LocationFailureEvent */
-        mLocationManager.removeUpdates(mLocationListener);
-        mIsListeningForUpdates = false;
-        EventBus.getDefault().post(new LocationFailureEvent("Location timeout"));
-    }
-
-//    Members
+    //    Members
     private LocationManager mLocationManager;
     private LocationListener mLocationListener;
     private boolean mIsDetermineUserLocationTriggered;
@@ -39,7 +31,7 @@ public class LocationWorker {
     private double mLatitude;
     private double mLongitude;
 
-//    Make default constructor private
+    //    Make default constructor private
     private LocationWorker() {
         EventBus.getDefault().register(this);
         mIsDetermineUserLocationTriggered = false;
@@ -48,17 +40,19 @@ public class LocationWorker {
         mLongitude = 0.0;
     }
 
-//    Singleton wrapper
-    private static class Loader {
-        static LocationWorker instance = new LocationWorker();
-    }
-
-//    Implements getInstance() method
+    //    Implements getInstance() method
     public static LocationWorker getInstance() {
         return Loader.instance;
     }
 
-//    Public interface
+    //    Handle TimerTimeoutEvent
+    public void onEvent(TimerTimeoutEvent ev) {
+        /* Remove updates from listener and post LocationFailureEvent */
+        mLocationManager.removeUpdates(mLocationListener);
+        mIsListeningForUpdates = false;
+        EventBus.getDefault().post(new LocationFailureEvent("Location timeout"));
+    }
+
     /**
      * Trying to determine user location using suitable provider.
      * By default, the priority is given to POWER_LOW requirements which means in most cases
@@ -66,6 +60,7 @@ public class LocationWorker {
      * 45 seconds then LocationFailureEvent will be posted. LocationChangedEvent will be posted
      * when location determined. You can access latest location data by calling getLatitude() and
      * getLongitude() methods
+     *
      * @param context context
      */
     public void determineUserLocation(Context context) {
@@ -121,8 +116,11 @@ public class LocationWorker {
         mIsListeningForUpdates = true;
     }
 
+//    Public interface
+
     /**
      * Returns true if determineUserLocation() was be called at least once
+     *
      * @return boolean isDetermineUserLocationTriggered
      */
     public boolean isDetermineUserLocationTriggered() {
@@ -131,6 +129,7 @@ public class LocationWorker {
 
     /**
      * Returns true if LocationListener listening for updates from LocationManager
+     *
      * @return boolean isListeningForUpdates
      */
     public boolean isListeningForUpdates() {
@@ -139,6 +138,7 @@ public class LocationWorker {
 
     /**
      * Returns last known user latitude
+     *
      * @return double latitude
      */
     public double getLatitude() {
@@ -147,9 +147,15 @@ public class LocationWorker {
 
     /**
      * Returns last known user longitude
+     *
      * @return double longitude
      */
     public double getLongitude() {
         return mLongitude;
+    }
+
+    //    Singleton wrapper
+    private static class Loader {
+        static LocationWorker instance = new LocationWorker();
     }
 }

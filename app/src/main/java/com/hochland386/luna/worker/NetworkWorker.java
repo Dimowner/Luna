@@ -19,27 +19,22 @@ import de.greenrobot.event.EventBus;
  */
 public class NetworkWorker {
 
-//    Members
+    //    Members
     private final OkHttpClient mClient = new OkHttpClient();
 
-//    Make default constructor private
+    //    Make default constructor private
     private NetworkWorker() {
     }
 
-//    Singleton wrapper
-    private static class Loader {
-        static NetworkWorker instance = new NetworkWorker();
-    }
-
-//    Implements getInstance() method
+    //    Implements getInstance() method
     public static NetworkWorker getInstance() {
         return Loader.instance;
     }
 
-//    Public interface
     /**
      * Downloads data from passed URL in background thread. CurrentWeatherResponseEvent will be
      * posted when data is ready or CurrentWeatherFailureEvent if any error occurs
+     *
      * @param url URL
      */
     public void downloadCurrentWeatherData(String url) {
@@ -60,9 +55,12 @@ public class NetworkWorker {
         });
     }
 
+//    Public interface
+
     /**
      * Downloads data from passed URL in background thread. ForecastWeatherResponseEvent will be
      * posted when data is ready or ForecastWeatherFailureEvent if any error occurs
+     *
      * @param url URL
      */
     public void downloadForecastWeatherData(String url) {
@@ -81,5 +79,10 @@ public class NetworkWorker {
                 EventBus.getDefault().post(new ForecastWeatherResponseEvent(responseAsString));
             }
         });
+    }
+
+    //    Singleton wrapper
+    private static class Loader {
+        static NetworkWorker instance = new NetworkWorker();
     }
 }

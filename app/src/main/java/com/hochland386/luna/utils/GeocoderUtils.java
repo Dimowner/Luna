@@ -15,25 +15,20 @@ import java.util.Locale;
  */
 public class GeocoderUtils {
 
-//    Make default constructor private
+    //    Make default constructor private
     private GeocoderUtils() {
     }
 
-//    Singleton wrapper
-    private static class Loader {
-        static GeocoderUtils instance = new GeocoderUtils();
-    }
-
-//    Implements getInstance() method
+    //    Implements getInstance() method
     public static GeocoderUtils getInstance() {
         return Loader.instance;
     }
 
-//    Public interface
     /**
      * Transform latitude/longitude coordinate into a address.
-     * @param context context
-     * @param latitude latitude
+     *
+     * @param context   context
+     * @param latitude  latitude
      * @param longitude longitude
      * @return List of Address objects
      * @throws IOException thrown if the network is unavailable or any other I/O problem occurs
@@ -41,5 +36,12 @@ public class GeocoderUtils {
     public List<Address> getPlaceFromLocation(Context context, double latitude, double longitude) throws IOException {
         Geocoder geocoder = new Geocoder(context, Locale.ENGLISH);
         return geocoder.getFromLocation(latitude, longitude, 1);
+    }
+
+//    Public interface
+
+    //    Singleton wrapper
+    private static class Loader {
+        static GeocoderUtils instance = new GeocoderUtils();
     }
 }

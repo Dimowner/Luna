@@ -5,24 +5,26 @@ package com.hochland386.luna.model;
  */
 public class CurrentWeather extends Weather {
 
-//    CurrentWeather-specific members
+    //    CurrentWeather-specific members
     private String mPlace;
 
-//    Constructor
+    //    Constructor
     public CurrentWeather(int temperature, int humidity, int pressure, String summary, String place) {
         super(temperature, humidity, pressure, summary);
         mPlace = place;
     }
 
-//    Override default constructor
+    //    Override default constructor
     public CurrentWeather() {
         super();
         mPlace = "Unknown";
     }
 
 //    CurrentWeather-specific getters
+
     /**
      * Returns place
+     *
      * @return String place
      */
     public String getPlace() {
@@ -30,8 +32,10 @@ public class CurrentWeather extends Weather {
     }
 
 //    CurrentWeather-specific setters
+
     /**
      * Sets place with provided value
+     *
      * @param place New place value
      */
     public void setPlace(String place) {

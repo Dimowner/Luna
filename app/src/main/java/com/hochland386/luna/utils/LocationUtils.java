@@ -8,23 +8,18 @@ import android.location.Criteria;
  */
 public class LocationUtils {
 
-//    Make default constructor private
+    //    Make default constructor private
     private LocationUtils() {
     }
 
-//    Singleton wrapper
-    private static class Loader {
-        static LocationUtils instance = new LocationUtils();
-    }
-
-//    Implements getInstance() method
+    //    Implements getInstance() method
     public static LocationUtils getInstance() {
         return Loader.instance;
     }
 
-//    Public interface
     /**
      * Returns a Criteria object with ACCURACY_COARSE and POWER_LOW requirements
+     *
      * @return Criteria locationProviderCriteria
      */
     public Criteria getLocationProviderCriteria() {
@@ -36,5 +31,12 @@ public class LocationUtils {
         locationProviderCriteria.setSpeedRequired(false);
         locationProviderCriteria.setCostAllowed(true);
         return locationProviderCriteria;
+    }
+
+//    Public interface
+
+    //    Singleton wrapper
+    private static class Loader {
+        static LocationUtils instance = new LocationUtils();
     }
 }

@@ -30,10 +30,10 @@ import de.greenrobot.event.EventBus;
 
 public class DailyForecastActivity extends ListActivity {
 
-//    Constants
+    //    Constants
     private final int LOCATION_PERMISSIONS_REQUEST_CODE = 1;
 
-//    Members
+    //    Members
     private Forecast mForecast;
 
     @Override
@@ -51,14 +51,14 @@ public class DailyForecastActivity extends ListActivity {
         refreshWeather();
     }
 
-//    Implements onDestroy lifecycle method
+    //    Implements onDestroy lifecycle method
     @Override
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
 
-//    Implements onItemClick listener
+    //    Implements onItemClick listener
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         DailyWeather dailyWeather = mForecast.getDailyWithIndex(position);
@@ -76,6 +76,7 @@ public class DailyForecastActivity extends ListActivity {
 
 
 //    Private interface
+
     /**
      * Checks for location and network availability and call checkRuntimePermissions() if everything is OK
      */
@@ -94,11 +95,11 @@ public class DailyForecastActivity extends ListActivity {
     /**
      * Checks Location status. If LocationWorker.getUserLocation() never be called and
      * device don't listening for location updates then call getUserLocation().
-     *
+     * <p/>
      * If LocationWorker.getUserLocation() was be called at least once and device don't
      * listening for location updates then assuming that location already available and we can
      * use it.
-     *
+     * <p/>
      * Finally. If device is listening for location updates but there is no location available
      * then do nothing, just waiting for Location Event.
      */
@@ -189,7 +190,7 @@ public class DailyForecastActivity extends ListActivity {
         });
     }
 
-//    Handle requestPermissions results
+    //    Handle requestPermissions results
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
@@ -211,6 +212,7 @@ public class DailyForecastActivity extends ListActivity {
     }
 
 //    Handle Location events
+
     /**
      * Call downloadCurrentWeatherData() when location determined
      */
@@ -233,6 +235,7 @@ public class DailyForecastActivity extends ListActivity {
     }
 
 //    Handle Network events
+
     /**
      * Trying to parse JSON data and build Forecast object. Call updateUi() when Forecast
      * object is ready.

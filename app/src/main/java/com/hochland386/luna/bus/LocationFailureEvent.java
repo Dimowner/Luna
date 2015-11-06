@@ -5,17 +5,19 @@ package com.hochland386.luna.bus;
  */
 public class LocationFailureEvent {
 
-//    Members
+    //    Members
     private String mFailureMessage;
 
-//    Constructor
+    //    Constructor
     public LocationFailureEvent(String failureMessage) {
         mFailureMessage = failureMessage;
     }
 
 //    Getters
+
     /**
      * Returns location failure error message
+     *
      * @return String message
      */
     public String getFailureMessage() {

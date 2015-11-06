@@ -36,16 +36,16 @@ import de.greenrobot.event.EventBus;
 
 public class CurrentWeatherActivity extends AppCompatActivity {
 
-//    Constants
+    //    Constants
     private final int LOCATION_PERMISSIONS_REQUEST_CODE = 0;
 
-//    View's declaration
+    //    View's declaration
     private ImageButton refreshIb;
     private ProgressBar refreshPb;
     private TextView placeTv, minusSymbolTv, temperatureTv,
             humidityValueTv, pressureValueTv, weatherSummaryTv;
 
-//    Members
+    //    Members
     private CurrentWeather mCurrentWeather;
 
     @Override
@@ -93,7 +93,7 @@ public class CurrentWeatherActivity extends AppCompatActivity {
         refreshWeather();
     }
 
-//    Implements onResume() lifecycle method
+    //    Implements onResume() lifecycle method
     @Override
     protected void onResume() {
         super.onResume();
@@ -103,6 +103,7 @@ public class CurrentWeatherActivity extends AppCompatActivity {
     }
 
 //    Private interface
+
     /**
      * Hide refresh ImageButton and shows refresh ProgressBar instead
      */
@@ -201,7 +202,7 @@ public class CurrentWeatherActivity extends AppCompatActivity {
         }
     }
 
-//    Handle requestPermissions result
+    //    Handle requestPermissions result
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
@@ -223,6 +224,7 @@ public class CurrentWeatherActivity extends AppCompatActivity {
     }
 
 //    Handle Location events
+
     /**
      * Call getCurrentWeatherData() when location determined
      */
@@ -245,6 +247,7 @@ public class CurrentWeatherActivity extends AppCompatActivity {
     }
 
 //    Handle Network events
+
     /**
      * Trying to parse JSON data and build CurrentWeather object. When object is ready trying to
      * reverse latitude and longitude into a place using geocoder and set it as CurrentWeather place.
