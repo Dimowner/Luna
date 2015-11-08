@@ -93,10 +93,10 @@ public class DailyForecastActivity extends ListActivity {
     }
 
     /**
-     * Checks Location status. If LocationWorker.getUserLocation() never be called and
+     * Checks Location status. If LocationWorker.determineUserLocation() never be called and
      * device don't listening for location updates then call getUserLocation().
      * <p/>
-     * If LocationWorker.getUserLocation() was be called at least once and device don't
+     * If LocationWorker.determineUserLocation() was be called at least once and device don't
      * listening for location updates then assuming that location already available and we can
      * use it.
      * <p/>

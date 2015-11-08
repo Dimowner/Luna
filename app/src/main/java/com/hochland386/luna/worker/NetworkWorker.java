@@ -15,7 +15,7 @@ import de.greenrobot.event.EventBus;
 
 /**
  * Created by vitaly on 10/18/15.
- * This class provides public interface and callback to download data from URL in background thread
+ * This class provides public interface and events to download data from URL in background thread
  */
 public class NetworkWorker {
 

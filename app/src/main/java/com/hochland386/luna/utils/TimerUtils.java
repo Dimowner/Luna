@@ -8,7 +8,7 @@ import de.greenrobot.event.EventBus;
 
 /**
  * Created by vitaly on 10/17/15.
- * This class provides timers with callback and control interfaces
+ * This class provides timers with events and control interfaces
  */
 public class TimerUtils {
 

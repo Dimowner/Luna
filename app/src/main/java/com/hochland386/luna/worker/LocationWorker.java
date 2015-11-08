@@ -18,7 +18,7 @@ import de.greenrobot.event.EventBus;
 
 /**
  * Created by vitaly on 10/18/15.
- * This class provides public interface and callback to determine user location
+ * This class provides public interface and events to determine user location
  */
 @SuppressWarnings("ResourceType")
 public class LocationWorker {
