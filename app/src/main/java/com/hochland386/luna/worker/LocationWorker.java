@@ -53,6 +53,8 @@ public class LocationWorker {
         EventBus.getDefault().post(new LocationFailureEvent("Location timeout"));
     }
 
+    //    Public interface
+
     /**
      * Trying to determine user location using suitable provider.
      * By default, the priority is given to POWER_LOW requirements which means in most cases
@@ -116,7 +118,14 @@ public class LocationWorker {
         mIsListeningForUpdates = true;
     }
 
-//    Public interface
+    /**
+     * Remove location updates from LocationListener
+     */
+    public void removeLocationUpdates() {
+        if (mLocationManager != null && mLocationListener != null) {
+            mLocationManager.removeUpdates(mLocationListener);
+        }
+    }
 
     /**
      * Returns true if determineUserLocation() was be called at least once

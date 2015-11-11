@@ -23,6 +23,7 @@ import com.hochland386.luna.utils.Constants;
 import com.hochland386.luna.utils.GeocoderUtils;
 import com.hochland386.luna.utils.ProvidersChecker;
 import com.hochland386.luna.utils.ResponseParser;
+import com.hochland386.luna.utils.TimerUtils;
 import com.hochland386.luna.utils.UrlBuilder;
 import com.hochland386.luna.worker.LocationWorker;
 import com.hochland386.luna.worker.NetworkWorker;
@@ -101,6 +102,16 @@ public class CurrentWeatherActivity extends AppCompatActivity {
             toggleRefreshAnimationOn();
         }
     }
+
+    //    Implements onDestroy() lifecycle method
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        TimerUtils.getInstance().cancelLocationTimeoutTimer(); /* Cancel Location timeout timer */
+        LocationWorker.getInstance().removeLocationUpdates(); /* Remove updates from LocationListener */
+        EventBus.getDefault().unregister(this); /* Unsubscribe from all events */
+    }
+
 
 //    Private interface
 
