@@ -1,0 +1,74 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="com.hochland386.luna.fragments.HumidityPressureFragment"
+             tools:background="@color/honeyFlower_bg">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="32dp"
+        android:baselineAligned="false"
+        android:weightSum="100">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="50">
+
+            <TextView
+                android:id="@+id/fragmentHumidityHeaderTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:textSize="16sp"
+                android:textColor="#80ffffff"
+                android:text="@string/humidityHeaderTv"/>
+
+            <TextView
+                android:id="@+id/fragmentHumidityValueTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:paddingTop="4dp"
+                android:textSize="16sp"
+                android:textColor="@android:color/primary_text_dark"
+                android:text="@string/humidityValueTv"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="50">
+
+            <TextView
+                android:id="@+id/fragmentPressureHeaderTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:textSize="16sp"
+                android:textColor="#80ffffff"
+                android:text="@string/pressureHeaderTv"/>
+
+            <TextView
+                android:id="@+id/fragmentPressureValueTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:paddingTop="4dp"
+                android:textSize="16sp"
+                android:textColor="@android:color/primary_text_dark"
+                android:text="@string/pressureValueTv"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>
