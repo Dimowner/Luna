@@ -9,140 +9,48 @@
                 android:background="@color/honeyFlower_bg"
                 tools:context=".CurrentWeatherActivity">
 
-    <ImageButton
-        android:id="@+id/refreshIb"
+    <fragment
+        android:id="@+id/currentRefreshFragment"
+        class="com.hochland386.luna.fragments.RefreshFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
-        android:background="@drawable/refresh"/>
+        tools:layout="@layout/fragment_refresh"/>
 
-    <ProgressBar
-        android:id="@+id/refreshPb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/refreshIb"
-        android:layout_alignBottom="@id/refreshIb"
-        android:layout_alignLeft="@id/refreshIb"
-        android:layout_alignRight="@id/refreshIb"
-        android:visibility="invisible"/>
-
-    <TextView
-        android:id="@+id/placeTv"
+    <fragment
+        android:id="@+id/currentPlaceFragment"
+        class="com.hochland386.luna.fragments.PlaceFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/refreshIb"
-        android:layout_marginTop="64dp"
-        android:textSize="20sp"
-        android:textColor="@android:color/primary_text_dark"
-        android:text="@string/placeTv"/>
+        android:layout_below="@id/currentRefreshFragment"
+        tools:layout="@layout/fragment_place"/>
 
-    <TextView
-        android:id="@+id/temperatureTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:textSize="100sp"
-        android:textColor="@android:color/primary_text_dark"
-        android:text="@string/temperatureTv"/>
-
-    <TextView
-        android:id="@+id/minusSymbolTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/temperatureTv"
-        android:layout_centerVertical="true"
-        android:paddingRight="5dp"
-        android:textSize="100sp"
-        android:textColor="@android:color/primary_text_dark"
-        android:text="@string/minusSymbolTv"/>
-
-    <TextView
-        android:id="@+id/degreeSymbolTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/temperatureTv"
-        android:layout_alignTop="@id/temperatureTv"
-        android:textSize="100sp"
-        android:textColor="@android:color/primary_text_dark"
-        android:text="@string/degreeSymbolTv"/>
-
-    <LinearLayout
-        android:orientation="horizontal"
+    <fragment
+        android:id="@+id/currentTemperatureFragment"
+        class="com.hochland386.luna.fragments.TemperatureFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/temperatureTv"
-        android:paddingTop="32dp"
-        android:baselineAligned="false"
-        android:weightSum="100">
+        android:layout_centerVertical="true"
+        tools:layout="@layout/fragment_temperature"/>
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="50">
+    <fragment
+        android:id="@+id/currentHumidityPressureFragment"
+        class="com.hochland386.luna.fragments.HumidityPressureFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/currentTemperatureFragment"
+        tools:layout="@layout/fragment_humidity_pressure"/>
 
-            <TextView
-                android:id="@+id/humidityHeaderTv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:textSize="16sp"
-                android:textColor="#80ffffff"
-                android:text="@string/humidityHeaderTv"/>
-
-            <TextView
-                android:id="@+id/humidityValueTv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:paddingTop="4dp"
-                android:textSize="16sp"
-                android:textColor="@android:color/primary_text_dark"
-                android:text="@string/humidityValueTv"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="50">
-
-            <TextView
-                android:id="@+id/pressureHeaderTv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:textSize="16sp"
-                android:textColor="#80ffffff"
-                android:text="@string/pressureHeaderTv"/>
-
-            <TextView
-                android:id="@+id/pressureValueTv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:paddingTop="4dp"
-                android:textSize="16sp"
-                android:textColor="@android:color/primary_text_dark"
-                android:text="@string/pressureValueTv"/>
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/weatherSummaryTv"
+    <fragment
+        android:id="@+id/currentWeatherSummaryFragment"
+        class="com.hochland386.luna.fragments.WeatherSummaryFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:textSize="20sp"
-        android:textColor="@android:color/primary_text_dark"
-        android:text="@string/weatherSummaryTv"/>
+        tools:layout="@layout/fragment_weather_summary"/>
 
 </RelativeLayout>
