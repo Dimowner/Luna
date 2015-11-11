@@ -8,9 +8,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hochland386.luna.R;
@@ -18,6 +15,11 @@ import com.hochland386.luna.bus.CurrentWeatherFailureEvent;
 import com.hochland386.luna.bus.CurrentWeatherResponseEvent;
 import com.hochland386.luna.bus.LocationChangedEvent;
 import com.hochland386.luna.bus.LocationFailureEvent;
+import com.hochland386.luna.fragments.HumidityPressureFragment;
+import com.hochland386.luna.fragments.PlaceFragment;
+import com.hochland386.luna.fragments.RefreshFragment;
+import com.hochland386.luna.fragments.TemperatureFragment;
+import com.hochland386.luna.fragments.WeatherSummaryFragment;
 import com.hochland386.luna.model.CurrentWeather;
 import com.hochland386.luna.utils.Constants;
 import com.hochland386.luna.utils.GeocoderUtils;
@@ -40,11 +42,12 @@ public class CurrentWeatherActivity extends AppCompatActivity {
     //    Constants
     private final int LOCATION_PERMISSIONS_REQUEST_CODE = 0;
 
-    //    View's declaration
-    private ImageButton refreshIb;
-    private ProgressBar refreshPb;
-    private TextView placeTv, minusSymbolTv, temperatureTv,
-            humidityValueTv, pressureValueTv, weatherSummaryTv;
+    //    Fragments declaration
+    private RefreshFragment refreshFragment;
+    private PlaceFragment placeFragment;
+    private TemperatureFragment temperatureFragment;
+    private HumidityPressureFragment humidityPressureFragment;
+    private WeatherSummaryFragment weatherSummaryFragment;
 
     //    Members
     private CurrentWeather mCurrentWeather;
@@ -54,29 +57,31 @@ public class CurrentWeatherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_current_weather);
 
-//        View's init
-        refreshIb = (ImageButton) findViewById(R.id.refreshIb);
-        refreshPb = (ProgressBar) findViewById(R.id.refreshPb);
-        placeTv = (TextView) findViewById(R.id.placeTv);
-        minusSymbolTv = (TextView) findViewById(R.id.minusSymbolTv);
-        temperatureTv = (TextView) findViewById(R.id.temperatureTv);
-        humidityValueTv = (TextView) findViewById(R.id.humidityValueTv);
-        pressureValueTv = (TextView) findViewById(R.id.pressureValueTv);
-        weatherSummaryTv = (TextView) findViewById(R.id.weatherSummaryTv);
+//        Fragments init
+        refreshFragment = (RefreshFragment)
+                getFragmentManager().findFragmentById(R.id.currentRefreshFragment);
+        placeFragment = (PlaceFragment)
+                getFragmentManager().findFragmentById(R.id.currentPlaceFragment);
+        temperatureFragment = (TemperatureFragment)
+                getFragmentManager().findFragmentById(R.id.currentTemperatureFragment);
+        humidityPressureFragment = (HumidityPressureFragment)
+                getFragmentManager().findFragmentById(R.id.currentHumidityPressureFragment);
+        weatherSummaryFragment = (WeatherSummaryFragment)
+                getFragmentManager().findFragmentById(R.id.currentWeatherSummaryFragment);
 
 //        Members init
         mCurrentWeather = new CurrentWeather();
 
-//        Set onClickListener to refreshIb
-        refreshIb.setOnClickListener(new View.OnClickListener() {
+//        Set onClickListener to refreshFragment
+        refreshFragment.setRefreshIbOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 refreshWeather();
             }
         });
 
-//        Set onClickListener to temperatureTv
-        temperatureTv.setOnClickListener(new View.OnClickListener() {
+//        Set onClickListener to temperatureFragment
+        temperatureFragment.setTemperatureTvOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent showForecastActivityIntent = new Intent(
@@ -99,7 +104,7 @@ public class CurrentWeatherActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (LocationWorker.getInstance().isListeningForUpdates()) {
-            toggleRefreshAnimationOn();
+            refreshFragment.toggleRefreshAnimationOn();
         }
     }
 
@@ -114,22 +119,6 @@ public class CurrentWeatherActivity extends AppCompatActivity {
 
 
 //    Private interface
-
-    /**
-     * Hide refresh ImageButton and shows refresh ProgressBar instead
-     */
-    private void toggleRefreshAnimationOn() {
-        refreshIb.setVisibility(View.INVISIBLE);
-        refreshPb.setVisibility(View.VISIBLE);
-    }
-
-    /**
-     * Hide refresh ProgressBar and shows refresh ImageButton instead
-     */
-    private void toggleRefreshAnimationOff() {
-        refreshPb.setVisibility(View.INVISIBLE);
-        refreshIb.setVisibility(View.VISIBLE);
-    }
 
     /**
      * Checks for location and network availability and call checkRuntimePermissions() if everything is OK
@@ -178,10 +167,10 @@ public class CurrentWeatherActivity extends AppCompatActivity {
      */
     private void getUserLocation() {
         if (ProvidersChecker.getInstance().isLocationEnabled(this)) {
-            toggleRefreshAnimationOn();
+            refreshFragment.toggleRefreshAnimationOn();
             LocationWorker.getInstance().determineUserLocation(this);
         } else {
-            toggleRefreshAnimationOff();
+            refreshFragment.toggleRefreshAnimationOff();
             Toast.makeText(
                     this,
                     getString(R.string.noLocationOrNetworkErrorMessage),
@@ -197,14 +186,14 @@ public class CurrentWeatherActivity extends AppCompatActivity {
      */
     private void getCurrentWeatherData() {
         if (ProvidersChecker.getInstance().isNetworkAvailable(this)) {
-            toggleRefreshAnimationOn();
+            refreshFragment.toggleRefreshAnimationOn();
             String currentWeatherUrl = UrlBuilder.getInstance().buildCurrentWeatherUrl(
                     String.valueOf(LocationWorker.getInstance().getLatitude()),
                     String.valueOf(LocationWorker.getInstance().getLongitude())
             );
             NetworkWorker.getInstance().downloadCurrentWeatherData(currentWeatherUrl);
         } else {
-            toggleRefreshAnimationOff();
+            refreshFragment.toggleRefreshAnimationOff();
             Toast.makeText(
                     this,
                     getString(R.string.noLocationOrNetworkErrorMessage),
@@ -319,25 +308,24 @@ public class CurrentWeatherActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                toggleRefreshAnimationOff();
-                placeTv.setText(mCurrentWeather.getPlace());
+                refreshFragment.toggleRefreshAnimationOff();
+                placeFragment.setPlaceTvValue(mCurrentWeather.getPlace());
                 if (mCurrentWeather.getTemperature() < 0) {
                     int reversedTemperature = mCurrentWeather.getTemperature() * -1;
-                    minusSymbolTv.setVisibility(View.VISIBLE);
-                    temperatureTv.setText(String.valueOf(reversedTemperature));
+                    temperatureFragment.setMinusVisibility(true);
+                    temperatureFragment.setTemperatureTvValue(reversedTemperature);
                 } else {
-                    minusSymbolTv.setVisibility(View.INVISIBLE);
-                    temperatureTv.setText(String.valueOf(mCurrentWeather.getTemperature()));
+                    temperatureFragment.setMinusVisibility(false);
+                    temperatureFragment.setTemperatureTvValue(mCurrentWeather.getTemperature());
                 }
-                String formattedHumidity = String.format("%s", mCurrentWeather.getHumidity() + "%");
-                humidityValueTv.setText(formattedHumidity);
-                pressureValueTv.setText(String.valueOf(mCurrentWeather.getPressure() * 0.75));
+                humidityPressureFragment.setHumidityTvValue(mCurrentWeather.getHumidity());
+                humidityPressureFragment.setPressureTvValue((int) (mCurrentWeather.getPressure() * 0.75));
                 String uppercaseSummary = mCurrentWeather.getSummary()
                         .substring(0, 1)
                         .toUpperCase()
                         + mCurrentWeather.getSummary()
                         .substring(1);
-                weatherSummaryTv.setText(uppercaseSummary);
+                weatherSummaryFragment.setWeatherSummaryTvValue(uppercaseSummary);
             }
         });
     }
