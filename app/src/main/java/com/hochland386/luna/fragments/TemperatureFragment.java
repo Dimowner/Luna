@@ -54,9 +54,9 @@ public class TemperatureFragment extends Fragment {
 
     /**
      * Set passed onClickListener to temperature TextView
-     * @param fragmentTemperatureTvOnClickListener View.OnClickListener
+     * @param temperatureTvOnClickListener View.OnClickListener
      */
-    public void setFragmentTemperatureTvOnClickListener(View.OnClickListener fragmentTemperatureTvOnClickListener) {
-        fragmentTemperatureTv.setOnClickListener(fragmentTemperatureTvOnClickListener);
+    public void setTemperatureTvOnClickListener(View.OnClickListener temperatureTvOnClickListener) {
+        fragmentTemperatureTv.setOnClickListener(temperatureTvOnClickListener);
     }
 }

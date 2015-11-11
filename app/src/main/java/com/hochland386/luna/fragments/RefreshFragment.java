@@ -58,7 +58,7 @@ public class RefreshFragment extends Fragment {
      * Set passed onClickListener to refresh ImageButton
      * @param refreshIbOnClickListener View.OnClickListener
      */
-    public void setFragmentRefreshIbOnClickListener(View.OnClickListener refreshIbOnClickListener) {
+    public void setRefreshIbOnClickListener(View.OnClickListener refreshIbOnClickListener) {
         fragmentRefreshIb.setOnClickListener(refreshIbOnClickListener);
     }
 }
