@@ -24,6 +24,8 @@
         </activity>
         <activity android:name=".ui.DailyForecastListActivity" >
         </activity>
+        <activity android:name=".ui.DailyWeatherDetailsActivity" >
+        </activity>
     </application>
 
 </manifest>
