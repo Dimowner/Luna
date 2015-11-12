@@ -21,6 +21,15 @@
         tools:layout="@layout/fragment_place"/>
 
     <fragment
+        android:id="@+id/detailsTimestampFragment"
+        class="com.hochland386.luna.fragments.TimestampFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/detailsPlaceFragment"
+        tools:layout="@layout/fragment_timestamp"/>
+
+    <fragment
         android:id="@+id/detailsTemperatureFragment"
         class="com.hochland386.luna.fragments.TemperatureFragment"
         android:layout_width="match_parent"
