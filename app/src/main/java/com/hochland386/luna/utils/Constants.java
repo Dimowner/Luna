@@ -19,6 +19,7 @@ public class Constants {
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.ACCESS_FINE_LOCATION
     };
+    private String mDailyWeatherExtraKey;
 
     //    Make default constructor private
     private Constants() {
@@ -28,6 +29,7 @@ public class Constants {
         mLocationMinDistance = 0;
         mApiKey = "7afd086976468949384e4359c0409420";
         mForecastCount = "10";
+        mDailyWeatherExtraKey = "INTENT_EXTRA_DAILY_WEATHER";
     }
 
     //    Implements getInstance() method
@@ -99,6 +101,14 @@ public class Constants {
      */
     public String[] getLocationPermissionsArray() {
         return mLocationPermissionsArray;
+    }
+
+    /**
+     * Returns key to send / retrieve DailyWeather intent extra
+     * @return String mDailyWeatherExtraKey
+     */
+    public String getDailyWeatherExtraKey() {
+        return mDailyWeatherExtraKey;
     }
 
     //    Singleton wrapper
