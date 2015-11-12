@@ -1,6 +1,7 @@
 package com.hochland386.luna.ui;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -62,16 +63,15 @@ public class DailyForecastListActivity extends ListActivity {
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         DailyWeather dailyWeather = mForecast.getDailyWithIndex(position);
-        String uppercaseSummary = dailyWeather.getSummary()
-                .substring(0, 1)
-                .toUpperCase()
-                + dailyWeather.getSummary()
-                .substring(1);
-        Toast.makeText(
+        Intent intent = new Intent(
                 DailyForecastListActivity.this,
-                uppercaseSummary,
-                Toast.LENGTH_LONG
-        ).show();
+                DailyWeatherDetailsActivity.class
+        );
+        intent.putExtra(
+                Constants.getInstance().getDailyWeatherExtraKey(),
+                dailyWeather
+        );
+        startActivity(intent);
     }
 
 
