@@ -3,5 +3,6 @@
 
     <color name="honeyFlower_bg">#674172</color>
     <color name="honeyFlower_sb">#522c5d</color>
+    <color name="fragmentTimestampTvTextColor">#88FFFFFF</color>
 
 </resources>
