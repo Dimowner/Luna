@@ -28,7 +28,7 @@ import org.json.JSONException;
 
 import de.greenrobot.event.EventBus;
 
-public class DailyForecastActivity extends ListActivity {
+public class DailyForecastListActivity extends ListActivity {
 
     //    Constants
     private final int LOCATION_PERMISSIONS_REQUEST_CODE = 1;
@@ -68,7 +68,7 @@ public class DailyForecastActivity extends ListActivity {
                 + dailyWeather.getSummary()
                 .substring(1);
         Toast.makeText(
-                DailyForecastActivity.this,
+                DailyForecastListActivity.this,
                 uppercaseSummary,
                 Toast.LENGTH_LONG
         ).show();
@@ -108,16 +108,16 @@ public class DailyForecastActivity extends ListActivity {
                 && !LocationWorker.getInstance().isListeningForUpdates()) {
         /* Checks runtime permissions. Request permissions if it's not already granted */
             if (ContextCompat.checkSelfPermission(
-                    DailyForecastActivity.this,
+                    DailyForecastListActivity.this,
                     Constants.getInstance().getLocationPermissionsArray()[0])
                     != PackageManager.PERMISSION_GRANTED
                     && ContextCompat.checkSelfPermission(
-                    DailyForecastActivity.this,
+                    DailyForecastListActivity.this,
                     Constants.getInstance().getLocationPermissionsArray()[1])
                     != PackageManager.PERMISSION_GRANTED) {
                 /* Warning! No permissions at this point of the time. Requesting ... */
                 ActivityCompat.requestPermissions(
-                        DailyForecastActivity.this,
+                        DailyForecastListActivity.this,
                         Constants.getInstance().getLocationPermissionsArray(),
                         LOCATION_PERMISSIONS_REQUEST_CODE
                 );
@@ -182,7 +182,7 @@ public class DailyForecastActivity extends ListActivity {
             @Override
             public void run() {
                 DailyForecastAdapter forecastAdapter = new DailyForecastAdapter(
-                        DailyForecastActivity.this,
+                        DailyForecastListActivity.this,
                         mForecast
                 );
                 setListAdapter(forecastAdapter);
@@ -202,7 +202,7 @@ public class DailyForecastActivity extends ListActivity {
                 } else {
                     /* Permissions denied! Shows toast with error */
                     Toast.makeText(
-                            DailyForecastActivity.this,
+                            DailyForecastListActivity.this,
                             getString(R.string.permissionsDeniedErrorMessage),
                             Toast.LENGTH_LONG
                     ).show();

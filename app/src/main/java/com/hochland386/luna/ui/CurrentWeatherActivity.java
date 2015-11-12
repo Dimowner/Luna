@@ -86,7 +86,7 @@ public class CurrentWeatherActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent showForecastActivityIntent = new Intent(
                         CurrentWeatherActivity.this,
-                        DailyForecastActivity.class
+                        DailyForecastListActivity.class
                 );
                 startActivity(showForecastActivityIntent);
             }
