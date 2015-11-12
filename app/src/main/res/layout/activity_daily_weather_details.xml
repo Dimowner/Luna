@@ -12,21 +12,11 @@
     tools:context="com.hochland386.luna.ui.DailyWeatherDetailsActivity">
 
     <fragment
-        android:id="@+id/detailsPlaceFragment"
-        class="com.hochland386.luna.fragments.PlaceFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="true"
-        tools:layout="@layout/fragment_place"/>
-
-    <fragment
         android:id="@+id/detailsTimestampFragment"
         class="com.hochland386.luna.fragments.TimestampFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/detailsPlaceFragment"
         tools:layout="@layout/fragment_timestamp"/>
 
     <fragment
