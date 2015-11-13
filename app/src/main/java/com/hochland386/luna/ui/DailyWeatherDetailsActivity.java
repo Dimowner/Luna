@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.hochland386.luna.R;
-import com.hochland386.luna.fragments.HumidityPressureFragment;
+import com.hochland386.luna.fragments.TableDataFragment;
 import com.hochland386.luna.fragments.TemperatureFragment;
 import com.hochland386.luna.fragments.TimestampFragment;
 import com.hochland386.luna.fragments.WeatherSummaryFragment;
@@ -38,7 +38,7 @@ public class DailyWeatherDetailsActivity extends AppCompatActivity {
 //    Fragments declaration
     private TimestampFragment timestampFragment;
     private TemperatureFragment temperatureFragment;
-    private HumidityPressureFragment humidityPressureFragment;
+    private TableDataFragment mTableDataFragment;
     private WeatherSummaryFragment weatherSummaryFragment;
 
 //    Members
@@ -54,7 +54,7 @@ public class DailyWeatherDetailsActivity extends AppCompatActivity {
                 getFragmentManager().findFragmentById(R.id.detailsTimestampFragment);
         temperatureFragment = (TemperatureFragment)
                 getFragmentManager().findFragmentById(R.id.detailsTemperatureFragment);
-        humidityPressureFragment = (HumidityPressureFragment)
+        mTableDataFragment = (TableDataFragment)
                 getFragmentManager().findFragmentById(R.id.detailsHumidityPressureFragment);
         weatherSummaryFragment = (WeatherSummaryFragment)
                 getFragmentManager().findFragmentById(R.id.detailsWeatherSummaryFragment);
@@ -85,8 +85,15 @@ public class DailyWeatherDetailsActivity extends AppCompatActivity {
             temperatureFragment.setMinusVisibility(false);
             temperatureFragment.setTemperatureTvValue(mDailyWeather.getTemperature());
         }
-        humidityPressureFragment.setHumidityTvValue(mDailyWeather.getHumidity());
-        humidityPressureFragment.setPressureTvValue((int) (mDailyWeather.getPressure() * 0.75));
+        String formattedHumidity = String.format("%s", mDailyWeather.getHumidity() + "%");
+        mTableDataFragment
+                .setLeftHeaderText(getString(R.string.tableFragmentHumidityHeader));
+        mTableDataFragment
+                .setLeftValueText(formattedHumidity);
+        mTableDataFragment
+                .setRightHeaderText(getString(R.string.tableFragmentPressureHeader));
+        mTableDataFragment
+                .setRightValueText(String.valueOf(mDailyWeather.getPressure() * 0.75));
         String uppercaseSummary = mDailyWeather.getSummary()
                 .substring(0, 1)
                 .toUpperCase()

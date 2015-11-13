@@ -7,10 +7,12 @@
     <string name="temperatureTv">--</string>
     <string name="minusSymbolTv">-</string>
     <string name="degreeSymbolTv">°</string>
-    <string name="humidityHeaderTv">HUMIDITY</string>
-    <string name="humidityValueTv">---</string>
-    <string name="pressureHeaderTv">PRESSURE</string>
-    <string name="pressureValueTv">---</string>
+    <string name="tableFragmentLeftDefaultHeader">---</string>
+    <string name="tableFragmentLeftDefaultValue">---</string>
+    <string name="tableFragmentRightDefaultHeader">---</string>
+    <string name="tableFragmentRightDefaultValue">---</string>
+    <string name="tableFragmentHumidityHeader">HUMIDITY</string>
+    <string name="tableFragmentPressureHeader">PRESSURE</string>
     <string name="weatherSummaryTv">Weather Summary</string>
     <string name="noLocationOrNetworkErrorMessage">Location or network are unavailable</string>
     <string name="permissionsDeniedErrorMessage">Oops. Permissions denied :(</string>

@@ -15,7 +15,7 @@ import com.hochland386.luna.bus.CurrentWeatherFailureEvent;
 import com.hochland386.luna.bus.CurrentWeatherResponseEvent;
 import com.hochland386.luna.bus.LocationChangedEvent;
 import com.hochland386.luna.bus.LocationFailureEvent;
-import com.hochland386.luna.fragments.HumidityPressureFragment;
+import com.hochland386.luna.fragments.TableDataFragment;
 import com.hochland386.luna.fragments.PlaceFragment;
 import com.hochland386.luna.fragments.RefreshFragment;
 import com.hochland386.luna.fragments.TemperatureFragment;
@@ -66,7 +66,7 @@ public class CurrentWeatherActivity extends AppCompatActivity {
     private RefreshFragment refreshFragment;
     private PlaceFragment placeFragment;
     private TemperatureFragment temperatureFragment;
-    private HumidityPressureFragment humidityPressureFragment;
+    private TableDataFragment mTableDataFragment;
     private WeatherSummaryFragment weatherSummaryFragment;
 
     //    Members
@@ -84,7 +84,7 @@ public class CurrentWeatherActivity extends AppCompatActivity {
                 getFragmentManager().findFragmentById(R.id.currentPlaceFragment);
         temperatureFragment = (TemperatureFragment)
                 getFragmentManager().findFragmentById(R.id.currentTemperatureFragment);
-        humidityPressureFragment = (HumidityPressureFragment)
+        mTableDataFragment = (TableDataFragment)
                 getFragmentManager().findFragmentById(R.id.currentHumidityPressureFragment);
         weatherSummaryFragment = (WeatherSummaryFragment)
                 getFragmentManager().findFragmentById(R.id.currentWeatherSummaryFragment);
@@ -338,8 +338,15 @@ public class CurrentWeatherActivity extends AppCompatActivity {
                     temperatureFragment.setMinusVisibility(false);
                     temperatureFragment.setTemperatureTvValue(mCurrentWeather.getTemperature());
                 }
-                humidityPressureFragment.setHumidityTvValue(mCurrentWeather.getHumidity());
-                humidityPressureFragment.setPressureTvValue((int) (mCurrentWeather.getPressure() * 0.75));
+                String formattedHumidity = String.format("%s", mCurrentWeather.getHumidity() + "%");
+                mTableDataFragment
+                        .setLeftHeaderText(getString(R.string.tableFragmentHumidityHeader));
+                mTableDataFragment
+                        .setLeftValueText(formattedHumidity);
+                mTableDataFragment
+                        .setRightHeaderText(getString(R.string.tableFragmentPressureHeader));
+                mTableDataFragment
+                        .setRightValueText(String.valueOf(mCurrentWeather.getPressure() * 0.75));
                 String uppercaseSummary = mCurrentWeather.getSummary()
                         .substring(0, 1)
                         .toUpperCase()

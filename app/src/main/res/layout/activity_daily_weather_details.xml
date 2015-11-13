@@ -30,11 +30,11 @@
 
     <fragment
         android:id="@+id/detailsHumidityPressureFragment"
-        class="com.hochland386.luna.fragments.HumidityPressureFragment"
+        class="com.hochland386.luna.fragments.TableDataFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/detailsTemperatureFragment"
-        tools:layout="@layout/fragment_humidity_pressure"/>
+        tools:layout="@layout/fragment_table_data"/>
 
     <fragment
         android:id="@+id/detailsWeatherSummaryFragment"

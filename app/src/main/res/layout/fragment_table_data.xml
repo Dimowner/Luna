@@ -2,7 +2,7 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context="com.hochland386.luna.fragments.HumidityPressureFragment"
+             tools:context="com.hochland386.luna.fragments.TableDataFragment"
              tools:background="@color/honeyFlower_bg">
 
     <LinearLayout
@@ -21,23 +21,23 @@
             android:layout_weight="50">
 
             <TextView
-                android:id="@+id/fragmentHumidityHeaderTv"
+                android:id="@+id/tableFragmentLeftHeader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:textSize="16sp"
                 android:textColor="#80ffffff"
-                android:text="@string/humidityHeaderTv"/>
+                android:text="@string/tableFragmentLeftDefaultHeader"/>
 
             <TextView
-                android:id="@+id/fragmentHumidityValueTv"
+                android:id="@+id/tableFragmentLeftValue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:paddingTop="4dp"
                 android:textSize="16sp"
                 android:textColor="@android:color/primary_text_dark"
-                android:text="@string/humidityValueTv"/>
+                android:text="@string/tableFragmentLeftDefaultValue"/>
 
         </LinearLayout>
 
@@ -48,23 +48,23 @@
             android:layout_weight="50">
 
             <TextView
-                android:id="@+id/fragmentPressureHeaderTv"
+                android:id="@+id/tableFragmentRightHeader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:textSize="16sp"
                 android:textColor="#80ffffff"
-                android:text="@string/pressureHeaderTv"/>
+                android:text="@string/tableFragmentRightDefaultHeader"/>
 
             <TextView
-                android:id="@+id/fragmentPressureValueTv"
+                android:id="@+id/tableFragmentRightValue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:paddingTop="4dp"
                 android:textSize="16sp"
                 android:textColor="@android:color/primary_text_dark"
-                android:text="@string/pressureValueTv"/>
+                android:text="@string/tableFragmentRightDefaultValue"/>
 
         </LinearLayout>
 
