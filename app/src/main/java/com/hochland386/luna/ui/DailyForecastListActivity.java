@@ -221,12 +221,8 @@ public class DailyForecastListActivity extends ListActivity {
                     /* Permissions was granted, yay! */
                     getUserLocation();
                 } else {
-                    /* Permissions denied! Shows toast with error */
-                    Toast.makeText(
-                            DailyForecastListActivity.this,
-                            getString(R.string.permissionsDeniedErrorMessage),
-                            Toast.LENGTH_LONG
-                    ).show();
+                    /* Permissions denied! Finishing activity */
+                    finish();
                 }
                 break;
         }
