@@ -112,6 +112,12 @@ public class CurrentWeatherActivity extends AppCompatActivity {
             }
         });
 
+//        Sets TableDataFragment headers
+        mTableDataFragment
+                .setLeftHeaderText(getString(R.string.tableFragmentHumidityHeader));
+        mTableDataFragment
+                .setRightHeaderText(getString(R.string.tableFragmentPressureHeader));
+
 //        Register for events
         EventBus.getDefault().register(this);
 
@@ -340,11 +346,7 @@ public class CurrentWeatherActivity extends AppCompatActivity {
                 }
                 String formattedHumidity = String.format("%s", mCurrentWeather.getHumidity() + "%");
                 mTableDataFragment
-                        .setLeftHeaderText(getString(R.string.tableFragmentHumidityHeader));
-                mTableDataFragment
                         .setLeftValueText(formattedHumidity);
-                mTableDataFragment
-                        .setRightHeaderText(getString(R.string.tableFragmentPressureHeader));
                 mTableDataFragment
                         .setRightValueText(String.valueOf(mCurrentWeather.getPressure() * 0.75));
                 String uppercaseSummary = mCurrentWeather.getSummary()

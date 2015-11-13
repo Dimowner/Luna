@@ -59,6 +59,12 @@ public class DailyWeatherDetailsActivity extends AppCompatActivity {
         weatherSummaryFragment = (WeatherSummaryFragment)
                 getFragmentManager().findFragmentById(R.id.detailsWeatherSummaryFragment);
 
+//        Sets TableDataFragment headers
+        mTableDataFragment
+                .setLeftHeaderText(getString(R.string.tableFragmentHumidityHeader));
+        mTableDataFragment
+                .setRightHeaderText(getString(R.string.tableFragmentPressureHeader));
+
 //        Retrieve extra data from intent that starts this activity
         Intent intent = getIntent();
         mDailyWeather = intent.getParcelableExtra(
@@ -87,11 +93,7 @@ public class DailyWeatherDetailsActivity extends AppCompatActivity {
         }
         String formattedHumidity = String.format("%s", mDailyWeather.getHumidity() + "%");
         mTableDataFragment
-                .setLeftHeaderText(getString(R.string.tableFragmentHumidityHeader));
-        mTableDataFragment
                 .setLeftValueText(formattedHumidity);
-        mTableDataFragment
-                .setRightHeaderText(getString(R.string.tableFragmentPressureHeader));
         mTableDataFragment
                 .setRightValueText(String.valueOf(mDailyWeather.getPressure() * 0.75));
         String uppercaseSummary = mDailyWeather.getSummary()
