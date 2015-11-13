@@ -37,7 +37,7 @@
         tools:layout="@layout/fragment_temperature"/>
 
     <fragment
-        android:id="@+id/currentHumidityPressureFragment"
+        android:id="@+id/currentTableDataFragment"
         class="com.hochland386.luna.fragments.TableDataFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

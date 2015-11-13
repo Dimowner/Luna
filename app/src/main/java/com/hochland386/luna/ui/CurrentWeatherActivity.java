@@ -85,7 +85,7 @@ public class CurrentWeatherActivity extends AppCompatActivity {
         temperatureFragment = (TemperatureFragment)
                 getFragmentManager().findFragmentById(R.id.currentTemperatureFragment);
         mTableDataFragment = (TableDataFragment)
-                getFragmentManager().findFragmentById(R.id.currentHumidityPressureFragment);
+                getFragmentManager().findFragmentById(R.id.currentTableDataFragment);
         weatherSummaryFragment = (WeatherSummaryFragment)
                 getFragmentManager().findFragmentById(R.id.currentWeatherSummaryFragment);
 

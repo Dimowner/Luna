@@ -55,7 +55,7 @@ public class DailyWeatherDetailsActivity extends AppCompatActivity {
         temperatureFragment = (TemperatureFragment)
                 getFragmentManager().findFragmentById(R.id.detailsTemperatureFragment);
         mTableDataFragment = (TableDataFragment)
-                getFragmentManager().findFragmentById(R.id.detailsHumidityPressureFragment);
+                getFragmentManager().findFragmentById(R.id.detailsTableDataFragment);
         weatherSummaryFragment = (WeatherSummaryFragment)
                 getFragmentManager().findFragmentById(R.id.detailsWeatherSummaryFragment);
 
