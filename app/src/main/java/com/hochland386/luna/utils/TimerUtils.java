@@ -68,7 +68,9 @@ public class TimerUtils {
      * Cancel location timeout timer.
      */
     public void cancelLocationTimeoutTimer() {
-        mLocationTimer.cancel();
+        if (mLocationTimer != null) {
+            mLocationTimer.cancel();
+        }
     }
 
     //    Singleton wrapper
