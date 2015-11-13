@@ -61,9 +61,9 @@ public class DailyWeatherDetailsActivity extends AppCompatActivity {
 
 //        Sets TableDataFragment headers
         mTableDataFragment
-                .setLeftHeaderText(getString(R.string.tableFragmentHumidityHeader));
+                .setLeftHeaderText(getString(R.string.tableFragmentMinTempHeader));
         mTableDataFragment
-                .setRightHeaderText(getString(R.string.tableFragmentPressureHeader));
+                .setRightHeaderText(getString(R.string.tableFragmentMaxTempHeader));
 
 //        Retrieve extra data from intent that starts this activity
         Intent intent = getIntent();
@@ -91,11 +91,12 @@ public class DailyWeatherDetailsActivity extends AppCompatActivity {
             temperatureFragment.setMinusVisibility(false);
             temperatureFragment.setTemperatureTvValue(mDailyWeather.getTemperature());
         }
-        String formattedHumidity = String.format("%s", mDailyWeather.getHumidity() + "%");
-        mTableDataFragment
-                .setLeftValueText(formattedHumidity);
-        mTableDataFragment
-                .setRightValueText(String.valueOf(mDailyWeather.getPressure() * 0.75));
+        mTableDataFragment.setLeftValueText(
+                mDailyWeather.getMinTemperature() + "\u00b0"
+        );
+        mTableDataFragment.setRightValueText(
+                mDailyWeather.getMaxTemperature() + "\u00b0"
+        );
         String uppercaseSummary = mDailyWeather.getSummary()
                 .substring(0, 1)
                 .toUpperCase()

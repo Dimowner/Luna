@@ -13,6 +13,8 @@
     <string name="tableFragmentRightDefaultValue">---</string>
     <string name="tableFragmentHumidityHeader">HUMIDITY</string>
     <string name="tableFragmentPressureHeader">PRESSURE</string>
+    <string name="tableFragmentMinTempHeader">MIN TEMP</string>
+    <string name="tableFragmentMaxTempHeader">MAX TEMP</string>
     <string name="weatherSummaryTv">Weather Summary</string>
     <string name="noLocationOrNetworkErrorMessage">Location or network are unavailable</string>
     <string name="permissionsDeniedErrorMessage">Oops. Permissions denied :(</string>

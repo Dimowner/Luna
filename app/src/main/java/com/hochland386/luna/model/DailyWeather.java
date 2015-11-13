@@ -27,12 +27,16 @@ public class DailyWeather extends Weather implements Parcelable {
 
     //    DailyWeather-specific members
     private long mTimeStamp;
+    private int mMinTemperature;
+    private int mMaxTemperature;
     private String mConditionGroup;
 
     //    Constructor
-    public DailyWeather(int temperature, int humidity, int pressure, String summary, long timeStamp, String conditionGroup) {
+    public DailyWeather(int temperature, int minTemperature, int maxTemperature, int humidity, int pressure, String summary, long timeStamp, String conditionGroup) {
         super(temperature, humidity, pressure, summary);
         mTimeStamp = timeStamp;
+        mMinTemperature = minTemperature;
+        mMaxTemperature = maxTemperature;
         mConditionGroup = conditionGroup;
     }
 
@@ -55,6 +59,24 @@ public class DailyWeather extends Weather implements Parcelable {
     }
 
     /**
+     * Returns min temperature value
+     *
+     * @return int minTemperature
+     */
+    public int getMinTemperature() {
+        return mMinTemperature;
+    }
+
+    /**
+     * Returns max temperature value
+     *
+     * @return int maxTemperature
+     */
+    public int getMaxTemperature() {
+        return mMaxTemperature;
+    }
+
+    /**
      * Returns conditionGroup value
      *
      * @return String conditionGroup
@@ -72,6 +94,8 @@ public class DailyWeather extends Weather implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(getTemperature());
+        dest.writeInt(mMinTemperature);
+        dest.writeInt(mMaxTemperature);
         dest.writeInt(getHumidity());
         dest.writeInt(getPressure());
         dest.writeString(getSummary());
@@ -82,6 +106,8 @@ public class DailyWeather extends Weather implements Parcelable {
 //    Private constructor for Parcel data
     private DailyWeather(Parcel in) {
         this(
+                in.readInt(),
+                in.readInt(),
                 in.readInt(),
                 in.readInt(),
                 in.readInt(),

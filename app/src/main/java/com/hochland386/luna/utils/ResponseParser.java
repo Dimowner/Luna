@@ -85,6 +85,12 @@ public class ResponseParser {
             int temperature = dailyJson
                     .getJSONObject("temp")
                     .getInt("day");
+            int minTemperature = dailyJson
+                    .getJSONObject("temp")
+                    .getInt("min");
+            int maxTemperature = dailyJson
+                    .getJSONObject("temp")
+                    .getInt("max");
             int humidity = dailyJson
                     .getInt("humidity");
             int pressure = dailyJson
@@ -99,7 +105,9 @@ public class ResponseParser {
                     .getJSONArray("weather")
                     .getJSONObject(0)
                     .getString("main");
-            DailyWeather dailyWeather = new DailyWeather(temperature, humidity, pressure, summary, timeStamp, conditionGroup);
+            DailyWeather dailyWeather = new DailyWeather(
+                    temperature, minTemperature, maxTemperature,
+                    humidity, pressure, summary, timeStamp, conditionGroup);
             forecast.setDailyAtIndex(i, dailyWeather);
         }
         return forecast;
