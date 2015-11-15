@@ -3,6 +3,7 @@ package com.hochland386.luna.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.hochland386.luna.R;
 import com.hochland386.luna.fragments.TableDataFragment;
@@ -64,6 +65,14 @@ public class DailyWeatherDetailsActivity extends AppCompatActivity {
                 .setLeftHeaderText(getString(R.string.tableFragmentMinTempHeader));
         mTableDataFragment
                 .setRightHeaderText(getString(R.string.tableFragmentMaxTempHeader));
+
+//        Sets onClickListener to temperatureFragment
+        temperatureFragment.setTemperatureTvOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
 //        Retrieve extra data from intent that starts this activity
         Intent intent = getIntent();
