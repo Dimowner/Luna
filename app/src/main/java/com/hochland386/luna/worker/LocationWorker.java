@@ -140,6 +140,7 @@ public class LocationWorker {
     public void removeLocationUpdates() {
         if (mLocationManager != null && mLocationListener != null) {
             mLocationManager.removeUpdates(mLocationListener);
+            mIsListeningForUpdates = false;
         }
     }
 
