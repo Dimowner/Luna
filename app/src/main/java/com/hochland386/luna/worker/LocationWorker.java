@@ -88,8 +88,7 @@ public class LocationWorker {
             @Override
             public void onLocationChanged(Location location) {
                 /* Cancel timer, remove updates from listener and call handleUserLocation() */
-                TimerUtils timerUtils = TimerUtils.getInstance();
-                timerUtils.cancelLocationTimeoutTimer();
+                TimerUtils.getInstance().cancelLocationTimeoutTimer();
                 mLocationManager.removeUpdates(mLocationListener);
                 mIsListeningForUpdates = false;
                 mLatitude = location.getLatitude();
@@ -110,20 +109,19 @@ public class LocationWorker {
             @Override
             public void onProviderDisabled(String provider) {
                 /* Cancel timer, remove updates from listener and call handleLocationFailure() */
-                TimerUtils timerUtils = TimerUtils.getInstance();
-                timerUtils.cancelLocationTimeoutTimer();
+                TimerUtils.getInstance().cancelLocationTimeoutTimer();
                 mLocationManager.removeUpdates(mLocationListener);
                 mIsListeningForUpdates = false;
                 EventBus.getDefault().post(new LocationFailureEvent("Location provider disabled"));
             }
         };
         /* Obtain locationProviderCriteria and best location provider */
-        LocationUtils locationUtils = LocationUtils.getInstance();
-        Criteria locationProviderCriteria = locationUtils.getLocationProviderCriteria();
+        Criteria locationProviderCriteria = LocationUtils
+                .getInstance()
+                .getLocationProviderCriteria();
         String locationProvider = mLocationManager.getBestProvider(locationProviderCriteria, true);
         /* Start Location Timeout timer and request location updates */
-        TimerUtils timerUtils = TimerUtils.getInstance();
-        timerUtils.startLocationTimeoutTimer();
+        TimerUtils.getInstance().startLocationTimeoutTimer();
         mLocationManager.requestLocationUpdates(
                 locationProvider,
                 Constants.getInstance().getLocationMinTime(),
