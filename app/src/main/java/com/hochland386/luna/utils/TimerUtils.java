@@ -22,10 +22,6 @@ import android.os.CountDownTimer;
  */
 public class TimerUtils {
 
-    public interface LocationTimerTimeout {
-        void handleTimeout();
-    }
-
     private CountDownTimer mLocationTimer;
 
     private TimerUtils() {
@@ -65,6 +61,10 @@ public class TimerUtils {
         if (mLocationTimer != null) {
             mLocationTimer.cancel();
         }
+    }
+
+    public interface LocationTimerTimeout {
+        void handleTimeout();
     }
 
     private static class Loader {

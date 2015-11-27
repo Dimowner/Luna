@@ -48,6 +48,9 @@ import de.greenrobot.event.EventBus;
  */
 public class DailyForecastListActivity extends ListActivity implements NetworkWorker.NetworkFailure {
 
+    private final int LOCATION_PERMISSIONS_REQUEST_CODE = 1;
+    private Forecast mForecast;
+
     @Override
     public void handleNetworkFailure() {
         Toast.makeText(
@@ -57,9 +60,6 @@ public class DailyForecastListActivity extends ListActivity implements NetworkWo
         ).show();
         updateUi();
     }
-
-    private final int LOCATION_PERMISSIONS_REQUEST_CODE = 1;
-    private Forecast mForecast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

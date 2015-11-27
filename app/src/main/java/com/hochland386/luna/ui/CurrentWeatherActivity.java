@@ -56,6 +56,14 @@ import de.greenrobot.event.EventBus;
  */
 public class CurrentWeatherActivity extends AppCompatActivity implements NetworkWorker.NetworkFailure {
 
+    private final int LOCATION_PERMISSIONS_REQUEST_CODE = 0;
+    private RefreshFragment refreshFragment;
+    private PlaceFragment placeFragment;
+    private TemperatureFragment temperatureFragment;
+    private TableDataFragment mTableDataFragment;
+    private WeatherSummaryFragment weatherSummaryFragment;
+    private CurrentWeather mCurrentWeather;
+
     @Override
     public void handleNetworkFailure() {
         Toast.makeText(
@@ -65,14 +73,6 @@ public class CurrentWeatherActivity extends AppCompatActivity implements Network
         ).show();
         updateUi();
     }
-
-    private final int LOCATION_PERMISSIONS_REQUEST_CODE = 0;
-    private RefreshFragment refreshFragment;
-    private PlaceFragment placeFragment;
-    private TemperatureFragment temperatureFragment;
-    private TableDataFragment mTableDataFragment;
-    private WeatherSummaryFragment weatherSummaryFragment;
-    private CurrentWeather mCurrentWeather;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

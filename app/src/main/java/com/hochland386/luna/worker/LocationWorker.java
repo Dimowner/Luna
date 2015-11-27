@@ -36,14 +36,6 @@ import de.greenrobot.event.EventBus;
 @SuppressWarnings("ResourceType")
 public class LocationWorker implements TimerUtils.LocationTimerTimeout {
 
-    @Override
-    public void handleTimeout() {
-        /* Remove updates from listener and post LocationFailureEvent */
-        mLocationManager.removeUpdates(mLocationListener);
-        mIsListeningForUpdates = false;
-        EventBus.getDefault().post(new LocationFailureEvent("Location timeout"));
-    }
-
     private LocationManager mLocationManager;
     private LocationListener mLocationListener;
     private boolean mIsDetermineUserLocationTriggered;
@@ -60,6 +52,14 @@ public class LocationWorker implements TimerUtils.LocationTimerTimeout {
 
     public static LocationWorker getInstance() {
         return Loader.instance;
+    }
+
+    @Override
+    public void handleTimeout() {
+        /* Remove updates from listener and post LocationFailureEvent */
+        mLocationManager.removeUpdates(mLocationListener);
+        mIsListeningForUpdates = false;
+        EventBus.getDefault().post(new LocationFailureEvent("Location timeout"));
     }
 
     /**

@@ -37,7 +37,7 @@ public class UrlBuilder {
     public String buildCurrentWeatherUrl(String latitude, String longitude) {
         return String.format(
                 "http://api.openweathermap.org/data/2.5/weather" +
-                "?lat=%s" +
+                        "?lat=%s" +
                         "&lon=%s" +
                         "&units=metric" +
                         "&appid=%s",
@@ -57,7 +57,7 @@ public class UrlBuilder {
     public String buildForecastWeatherUrl(String latitude, String longitude) {
         return String.format(
                 "http://api.openweathermap.org/data/2.5/forecast/daily" +
-                "?lat=%s" +
+                        "?lat=%s" +
                         "&lon=%s" +
                         "&units=metric" +
                         "&cnt=%s" +

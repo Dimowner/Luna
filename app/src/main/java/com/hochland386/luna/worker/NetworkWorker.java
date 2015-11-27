@@ -31,10 +31,6 @@ import de.greenrobot.event.EventBus;
  */
 public class NetworkWorker {
 
-    public interface NetworkFailure {
-        void handleNetworkFailure();
-    }
-
     private final OkHttpClient mClient = new OkHttpClient();
 
     private NetworkWorker() {
@@ -49,7 +45,7 @@ public class NetworkWorker {
      * posted when data is ready or handleNetworkFailure() interface method will be called if
      * network error occurs
      *
-     * @param url URL
+     * @param url            URL
      * @param failureHandler class which implements NetworkFailure interface
      */
     public void downloadCurrentWeatherData(String url, final NetworkFailure failureHandler) {
@@ -78,7 +74,7 @@ public class NetworkWorker {
      * posted when data is ready or handleNetworkFailure() interface method will be called if
      * network error occurs
      *
-     * @param url URL
+     * @param url            URL
      * @param failureHandler class which implements NetworkFailure interface
      */
     public void downloadForecastWeatherData(String url, final NetworkFailure failureHandler) {
@@ -100,6 +96,10 @@ public class NetworkWorker {
                 }
             }
         });
+    }
+
+    public interface NetworkFailure {
+        void handleNetworkFailure();
     }
 
     private static class Loader {
