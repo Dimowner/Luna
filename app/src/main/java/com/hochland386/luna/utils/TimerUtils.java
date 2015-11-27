@@ -2,10 +2,6 @@ package com.hochland386.luna.utils;
 
 import android.os.CountDownTimer;
 
-import com.hochland386.luna.bus.TimerTimeoutEvent;
-
-import de.greenrobot.event.EventBus;
-
 /**
  * Copyright 2015 Vitaly Sulimov <quarry386@fastmail.com>
  * <p/>
@@ -26,6 +22,10 @@ import de.greenrobot.event.EventBus;
  */
 public class TimerUtils {
 
+    public interface LocationTimerTimeout {
+        void handleTimeout();
+    }
+
     private CountDownTimer mLocationTimer;
 
     private TimerUtils() {
@@ -38,9 +38,11 @@ public class TimerUtils {
     /**
      * Starts location timeout timer with default timeout and countdown interval values.
      * You can cancel this timer by calling cancelLocationTimeoutTimer();
-     * If a timeout occurs TimerTimeoutEvent will be posted
+     * handleTimeout() interface method will be called if timeout occurs
+     *
+     * @param timeoutHandler class which implements LocationTimerTimeout interface
      */
-    public void startLocationTimeoutTimer() {
+    public void startLocationTimeoutTimer(final LocationTimerTimeout timeoutHandler) {
         mLocationTimer = new CountDownTimer(
                 Constants.getInstance().getLocationTimeout(),
                 Constants.getInstance().getCountDownInterval()) {
@@ -50,7 +52,7 @@ public class TimerUtils {
 
             @Override
             public void onFinish() {
-                EventBus.getDefault().post(new TimerTimeoutEvent());
+                timeoutHandler.handleTimeout();
             }
         };
         mLocationTimer.start();

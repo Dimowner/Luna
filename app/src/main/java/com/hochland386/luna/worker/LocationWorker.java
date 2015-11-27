@@ -9,7 +9,6 @@ import android.os.Bundle;
 
 import com.hochland386.luna.bus.LocationChangedEvent;
 import com.hochland386.luna.bus.LocationFailureEvent;
-import com.hochland386.luna.bus.TimerTimeoutEvent;
 import com.hochland386.luna.utils.Constants;
 import com.hochland386.luna.utils.LocationUtils;
 import com.hochland386.luna.utils.TimerUtils;
@@ -35,7 +34,15 @@ import de.greenrobot.event.EventBus;
  * MA 02110-1301, USA.
  */
 @SuppressWarnings("ResourceType")
-public class LocationWorker {
+public class LocationWorker implements TimerUtils.LocationTimerTimeout {
+
+    @Override
+    public void handleTimeout() {
+        /* Remove updates from listener and post LocationFailureEvent */
+        mLocationManager.removeUpdates(mLocationListener);
+        mIsListeningForUpdates = false;
+        EventBus.getDefault().post(new LocationFailureEvent("Location timeout"));
+    }
 
     private LocationManager mLocationManager;
     private LocationListener mLocationListener;
@@ -45,7 +52,6 @@ public class LocationWorker {
     private double mLongitude;
 
     private LocationWorker() {
-        EventBus.getDefault().register(this);
         mIsDetermineUserLocationTriggered = false;
         mIsListeningForUpdates = false;
         mLatitude = 0.0;
@@ -54,13 +60,6 @@ public class LocationWorker {
 
     public static LocationWorker getInstance() {
         return Loader.instance;
-    }
-
-    public void onEvent(TimerTimeoutEvent ev) {
-        /* Remove updates from listener and post LocationFailureEvent */
-        mLocationManager.removeUpdates(mLocationListener);
-        mIsListeningForUpdates = false;
-        EventBus.getDefault().post(new LocationFailureEvent("Location timeout"));
     }
 
     /**
@@ -111,7 +110,7 @@ public class LocationWorker {
                 .getLocationProviderCriteria();
         String locationProvider = mLocationManager.getBestProvider(locationProviderCriteria, true);
         /* Start Location Timeout timer and request location updates */
-        TimerUtils.getInstance().startLocationTimeoutTimer();
+        TimerUtils.getInstance().startLocationTimeoutTimer(this);
         mLocationManager.requestLocationUpdates(
                 locationProvider,
                 Constants.getInstance().getLocationMinTime(),
