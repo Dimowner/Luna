@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.hochland386.luna.R;
-import com.hochland386.luna.bus.CurrentWeatherFailureEvent;
 import com.hochland386.luna.bus.CurrentWeatherResponseEvent;
 import com.hochland386.luna.bus.LocationChangedEvent;
 import com.hochland386.luna.bus.LocationFailureEvent;
@@ -55,7 +54,17 @@ import de.greenrobot.event.EventBus;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301, USA.
  */
-public class CurrentWeatherActivity extends AppCompatActivity {
+public class CurrentWeatherActivity extends AppCompatActivity implements NetworkWorker.NetworkFailure {
+
+    @Override
+    public void handleNetworkFailure() {
+        Toast.makeText(
+                this,
+                R.string.networkFailureErrorMessage,
+                Toast.LENGTH_LONG
+        ).show();
+        updateUi();
+    }
 
     private final int LOCATION_PERMISSIONS_REQUEST_CODE = 0;
     private RefreshFragment refreshFragment;
@@ -198,7 +207,7 @@ public class CurrentWeatherActivity extends AppCompatActivity {
                     String.valueOf(LocationWorker.getInstance().getLatitude()),
                     String.valueOf(LocationWorker.getInstance().getLongitude())
             );
-            NetworkWorker.getInstance().downloadCurrentWeatherData(currentWeatherUrl);
+            NetworkWorker.getInstance().downloadCurrentWeatherData(currentWeatherUrl, this);
         } else {
             refreshFragment.toggleRefreshAnimationOff();
             Toast.makeText(
@@ -288,19 +297,6 @@ public class CurrentWeatherActivity extends AppCompatActivity {
         } finally {
             updateUi();
         }
-    }
-
-    /**
-     * Call updateUi() if network failure occurs. This will shows data from mock CurrentWeather
-     * object
-     */
-    public void onEvent(CurrentWeatherFailureEvent ev) {
-        Toast.makeText(
-                this,
-                R.string.networkFailureErrorMessage,
-                Toast.LENGTH_LONG
-        ).show();
-        updateUi();
     }
 
     /**

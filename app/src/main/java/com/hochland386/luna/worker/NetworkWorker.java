@@ -1,6 +1,5 @@
 package com.hochland386.luna.worker;
 
-import com.hochland386.luna.bus.CurrentWeatherFailureEvent;
 import com.hochland386.luna.bus.CurrentWeatherResponseEvent;
 import com.hochland386.luna.bus.ForecastWeatherFailureEvent;
 import com.hochland386.luna.bus.ForecastWeatherResponseEvent;
@@ -33,6 +32,10 @@ import de.greenrobot.event.EventBus;
  */
 public class NetworkWorker {
 
+    public interface NetworkFailure {
+        void handleNetworkFailure();
+    }
+
     private final OkHttpClient mClient = new OkHttpClient();
 
     private NetworkWorker() {
@@ -44,24 +47,29 @@ public class NetworkWorker {
 
     /**
      * Downloads data from passed URL in background thread. CurrentWeatherResponseEvent will be
-     * posted when data is ready or CurrentWeatherFailureEvent if any error occurs
+     * posted when data is ready or handleNetworkFailure() interface method will be called if
+     * network error occurs
      *
      * @param url URL
+     * @param failureHandler class which implements NetworkFailure interface
      */
-    public void downloadCurrentWeatherData(String url) {
+    public void downloadCurrentWeatherData(String url, final NetworkFailure failureHandler) {
         Request request = new Request.Builder()
                 .url(url)
                 .build();
         mClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Request request, IOException e) {
-                EventBus.getDefault().post(new CurrentWeatherFailureEvent());
             }
 
             @Override
             public void onResponse(Response response) throws IOException {
-                String responseAsString = response.body().string();
-                EventBus.getDefault().post(new CurrentWeatherResponseEvent(responseAsString));
+                if (!response.isSuccessful()) {
+                    failureHandler.handleNetworkFailure();
+                } else {
+                    String responseAsString = response.body().string();
+                    EventBus.getDefault().post(new CurrentWeatherResponseEvent(responseAsString));
+                }
             }
         });
     }
