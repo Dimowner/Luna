@@ -40,7 +40,7 @@ public class Constants {
         mLocationMinTime = 0;
         mLocationMinDistance = 0;
         mApiKey = "7afd086976468949384e4359c0409420";
-        mForecastCount = "10";
+        mForecastCount = "16";
         mDailyWeatherExtraKey = "INTENT_EXTRA_DAILY_WEATHER";
     }
 
