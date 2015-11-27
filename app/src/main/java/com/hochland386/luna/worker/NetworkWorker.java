@@ -1,7 +1,6 @@
 package com.hochland386.luna.worker;
 
 import com.hochland386.luna.bus.CurrentWeatherResponseEvent;
-import com.hochland386.luna.bus.ForecastWeatherFailureEvent;
 import com.hochland386.luna.bus.ForecastWeatherResponseEvent;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
@@ -76,24 +75,29 @@ public class NetworkWorker {
 
     /**
      * Downloads data from passed URL in background thread. ForecastWeatherResponseEvent will be
-     * posted when data is ready or ForecastWeatherFailureEvent if any error occurs
+     * posted when data is ready or handleNetworkFailure() interface method will be called if
+     * network error occurs
      *
      * @param url URL
+     * @param failureHandler class which implements NetworkFailure interface
      */
-    public void downloadForecastWeatherData(String url) {
+    public void downloadForecastWeatherData(String url, final NetworkFailure failureHandler) {
         Request request = new Request.Builder()
                 .url(url)
                 .build();
         mClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Request request, IOException e) {
-                EventBus.getDefault().post(new ForecastWeatherFailureEvent());
             }
 
             @Override
             public void onResponse(Response response) throws IOException {
-                String responseAsString = response.body().string();
-                EventBus.getDefault().post(new ForecastWeatherResponseEvent(responseAsString));
+                if (!response.isSuccessful()) {
+                    failureHandler.handleNetworkFailure();
+                } else {
+                    String responseAsString = response.body().string();
+                    EventBus.getDefault().post(new ForecastWeatherResponseEvent(responseAsString));
+                }
             }
         });
     }

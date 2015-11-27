@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import com.hochland386.luna.R;
 import com.hochland386.luna.adapters.DailyForecastAdapter;
-import com.hochland386.luna.bus.ForecastWeatherFailureEvent;
 import com.hochland386.luna.bus.ForecastWeatherResponseEvent;
 import com.hochland386.luna.bus.LocationChangedEvent;
 import com.hochland386.luna.bus.LocationFailureEvent;
@@ -47,7 +46,17 @@ import de.greenrobot.event.EventBus;
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301, USA.
  */
-public class DailyForecastListActivity extends ListActivity {
+public class DailyForecastListActivity extends ListActivity implements NetworkWorker.NetworkFailure {
+
+    @Override
+    public void handleNetworkFailure() {
+        Toast.makeText(
+                this,
+                getString(R.string.networkFailureErrorMessage),
+                Toast.LENGTH_LONG
+        ).show();
+        updateUi();
+    }
 
     private final int LOCATION_PERMISSIONS_REQUEST_CODE = 1;
     private Forecast mForecast;
@@ -171,7 +180,7 @@ public class DailyForecastListActivity extends ListActivity {
                     String.valueOf(LocationWorker.getInstance().getLatitude()),
                     String.valueOf(LocationWorker.getInstance().getLongitude())
             );
-            NetworkWorker.getInstance().downloadForecastWeatherData(forecastWeatherUrl);
+            NetworkWorker.getInstance().downloadForecastWeatherData(forecastWeatherUrl, this);
         } else {
             Toast.makeText(
                     this,
@@ -252,18 +261,5 @@ public class DailyForecastListActivity extends ListActivity {
         } finally {
             updateUi();
         }
-    }
-
-    /**
-     * Call updateUi() if network failure occurs. This will shows data from mock Forecast
-     * object
-     */
-    public void onEvent(ForecastWeatherFailureEvent ev) {
-        Toast.makeText(
-                this,
-                getString(R.string.networkFailureErrorMessage),
-                Toast.LENGTH_LONG
-        ).show();
-        updateUi();
     }
 }
