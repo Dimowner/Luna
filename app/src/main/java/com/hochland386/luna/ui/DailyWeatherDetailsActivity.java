@@ -15,34 +15,29 @@ import com.hochland386.luna.utils.Constants;
 import com.hochland386.luna.utils.DateFormatUtils;
 
 /**
- *
  * Copyright 2015 Vitaly Sulimov <quarry386@fastmail.com>
- *
+ * <p/>
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301, USA.
- *
  */
 public class DailyWeatherDetailsActivity extends AppCompatActivity {
 
-//    Fragments declaration
     private TimestampFragment timestampFragment;
     private TemperatureFragment temperatureFragment;
     private TableDataFragment mTableDataFragment;
     private WeatherSummaryFragment weatherSummaryFragment;
-
-//    Members
     private DailyWeather mDailyWeather;
 
     @Override
@@ -50,7 +45,6 @@ public class DailyWeatherDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daily_weather_details);
 
-//        Fragments init
         timestampFragment = (TimestampFragment)
                 getFragmentManager().findFragmentById(R.id.detailsTimestampFragment);
         temperatureFragment = (TemperatureFragment)
@@ -60,13 +54,11 @@ public class DailyWeatherDetailsActivity extends AppCompatActivity {
         weatherSummaryFragment = (WeatherSummaryFragment)
                 getFragmentManager().findFragmentById(R.id.detailsWeatherSummaryFragment);
 
-//        Sets TableDataFragment headers
         mTableDataFragment
                 .setLeftHeaderText(getString(R.string.tableFragmentMinTempHeader));
         mTableDataFragment
                 .setRightHeaderText(getString(R.string.tableFragmentMaxTempHeader));
 
-//        Sets onClickListener to temperatureFragment
         temperatureFragment.setTemperatureTvOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,17 +66,13 @@ public class DailyWeatherDetailsActivity extends AppCompatActivity {
             }
         });
 
-//        Retrieve extra data from intent that starts this activity
         Intent intent = getIntent();
         mDailyWeather = intent.getParcelableExtra(
                 Constants.getInstance().getDailyWeatherExtraKey()
         );
 
-//        Call updateUi when all necessary data is ready
         updateUi();
     }
-
-//    Private interface
 
     /**
      * Updates UI with data from mDailyWeather object

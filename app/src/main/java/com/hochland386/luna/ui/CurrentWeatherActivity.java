@@ -15,9 +15,9 @@ import com.hochland386.luna.bus.CurrentWeatherFailureEvent;
 import com.hochland386.luna.bus.CurrentWeatherResponseEvent;
 import com.hochland386.luna.bus.LocationChangedEvent;
 import com.hochland386.luna.bus.LocationFailureEvent;
-import com.hochland386.luna.fragments.TableDataFragment;
 import com.hochland386.luna.fragments.PlaceFragment;
 import com.hochland386.luna.fragments.RefreshFragment;
+import com.hochland386.luna.fragments.TableDataFragment;
 import com.hochland386.luna.fragments.TemperatureFragment;
 import com.hochland386.luna.fragments.WeatherSummaryFragment;
 import com.hochland386.luna.model.CurrentWeather;
@@ -38,38 +38,31 @@ import java.util.List;
 import de.greenrobot.event.EventBus;
 
 /**
- *
  * Copyright 2015 Vitaly Sulimov <quarry386@fastmail.com>
- *
+ * <p/>
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301, USA.
- *
  */
 public class CurrentWeatherActivity extends AppCompatActivity {
 
-    //    Constants
     private final int LOCATION_PERMISSIONS_REQUEST_CODE = 0;
-
-    //    Fragments declaration
     private RefreshFragment refreshFragment;
     private PlaceFragment placeFragment;
     private TemperatureFragment temperatureFragment;
     private TableDataFragment mTableDataFragment;
     private WeatherSummaryFragment weatherSummaryFragment;
-
-    //    Members
     private CurrentWeather mCurrentWeather;
 
     @Override
@@ -77,7 +70,6 @@ public class CurrentWeatherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_current_weather);
 
-//        Fragments init
         refreshFragment = (RefreshFragment)
                 getFragmentManager().findFragmentById(R.id.currentRefreshFragment);
         placeFragment = (PlaceFragment)
@@ -89,10 +81,8 @@ public class CurrentWeatherActivity extends AppCompatActivity {
         weatherSummaryFragment = (WeatherSummaryFragment)
                 getFragmentManager().findFragmentById(R.id.currentWeatherSummaryFragment);
 
-//        Members init
         mCurrentWeather = new CurrentWeather();
 
-//        Set onClickListener to refreshFragment
         refreshFragment.setRefreshIbOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,7 +90,6 @@ public class CurrentWeatherActivity extends AppCompatActivity {
             }
         });
 
-//        Set onClickListener to temperatureFragment
         temperatureFragment.setTemperatureTvOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,20 +101,16 @@ public class CurrentWeatherActivity extends AppCompatActivity {
             }
         });
 
-//        Sets TableDataFragment headers
         mTableDataFragment
                 .setLeftHeaderText(getString(R.string.tableFragmentHumidityHeader));
         mTableDataFragment
                 .setRightHeaderText(getString(R.string.tableFragmentPressureHeader));
 
-//        Register for events
         EventBus.getDefault().register(this);
 
-//        Refresh current weather when activity first created
         refreshWeather();
     }
 
-    //    Implements onResume() lifecycle method
     @Override
     protected void onResume() {
         super.onResume();
@@ -134,7 +119,6 @@ public class CurrentWeatherActivity extends AppCompatActivity {
         }
     }
 
-    //    Implements onDestroy() lifecycle method
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -142,9 +126,6 @@ public class CurrentWeatherActivity extends AppCompatActivity {
         LocationWorker.getInstance().removeLocationUpdates(); /* Remove updates from LocationListener */
         EventBus.getDefault().unregister(this); /* Unsubscribe from all events */
     }
-
-
-//    Private interface
 
     /**
      * Checks for location and network availability and call checkRuntimePermissions() if everything is OK
@@ -228,7 +209,6 @@ public class CurrentWeatherActivity extends AppCompatActivity {
         }
     }
 
-    //    Handle requestPermissions result
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
@@ -248,8 +228,6 @@ public class CurrentWeatherActivity extends AppCompatActivity {
                 break;
         }
     }
-
-//    Handle Location events
 
     /**
      * Call getCurrentWeatherData() when location determined
@@ -271,8 +249,6 @@ public class CurrentWeatherActivity extends AppCompatActivity {
         ).show();
         getCurrentWeatherData();
     }
-
-//    Handle Network events
 
     /**
      * Trying to parse JSON data and build CurrentWeather object. When object is ready trying to

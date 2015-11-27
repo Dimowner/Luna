@@ -17,29 +17,26 @@ import com.hochland386.luna.utils.TimerUtils;
 import de.greenrobot.event.EventBus;
 
 /**
- *
  * Copyright 2015 Vitaly Sulimov <quarry386@fastmail.com>
- *
+ * <p/>
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301, USA.
- *
  */
 @SuppressWarnings("ResourceType")
 public class LocationWorker {
 
-    //    Members
     private LocationManager mLocationManager;
     private LocationListener mLocationListener;
     private boolean mIsDetermineUserLocationTriggered;
@@ -47,7 +44,6 @@ public class LocationWorker {
     private double mLatitude;
     private double mLongitude;
 
-    //    Make default constructor private
     private LocationWorker() {
         EventBus.getDefault().register(this);
         mIsDetermineUserLocationTriggered = false;
@@ -56,20 +52,16 @@ public class LocationWorker {
         mLongitude = 0.0;
     }
 
-    //    Implements getInstance() method
     public static LocationWorker getInstance() {
         return Loader.instance;
     }
 
-    //    Handle TimerTimeoutEvent
     public void onEvent(TimerTimeoutEvent ev) {
         /* Remove updates from listener and post LocationFailureEvent */
         mLocationManager.removeUpdates(mLocationListener);
         mIsListeningForUpdates = false;
         EventBus.getDefault().post(new LocationFailureEvent("Location timeout"));
     }
-
-    //    Public interface
 
     /**
      * Trying to determine user location using suitable provider.
@@ -98,12 +90,10 @@ public class LocationWorker {
 
             @Override
             public void onStatusChanged(String provider, int status, Bundle extras) {
-
             }
 
             @Override
             public void onProviderEnabled(String provider) {
-
             }
 
             @Override
@@ -178,7 +168,6 @@ public class LocationWorker {
         return mLongitude;
     }
 
-    //    Singleton wrapper
     private static class Loader {
         static LocationWorker instance = new LocationWorker();
     }

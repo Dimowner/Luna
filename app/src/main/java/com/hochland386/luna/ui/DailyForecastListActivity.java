@@ -29,33 +29,27 @@ import org.json.JSONException;
 
 import de.greenrobot.event.EventBus;
 
-
 /**
- *
  * Copyright 2015 Vitaly Sulimov <quarry386@fastmail.com>
- *
+ * <p/>
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301, USA.
- *
  */
 public class DailyForecastListActivity extends ListActivity {
 
-    //    Constants
     private final int LOCATION_PERMISSIONS_REQUEST_CODE = 1;
-
-    //    Members
     private Forecast mForecast;
 
     @Override
@@ -63,24 +57,19 @@ public class DailyForecastListActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daily_forecast);
 
-//        Members init
         mForecast = new Forecast();
 
-//        Register for events
         EventBus.getDefault().register(this);
 
-//        Refresh forecast weather when activity first created
         refreshWeather();
     }
 
-    //    Implements onDestroy lifecycle method
     @Override
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
 
-    //    Implements onItemClick listener
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         DailyWeather dailyWeather = mForecast.getDailyWithIndex(position);
@@ -94,9 +83,6 @@ public class DailyForecastListActivity extends ListActivity {
         );
         startActivity(intent);
     }
-
-
-//    Private interface
 
     /**
      * Checks for location and network availability and call checkRuntimePermissions() if everything is OK
@@ -211,7 +197,6 @@ public class DailyForecastListActivity extends ListActivity {
         });
     }
 
-    //    Handle requestPermissions results
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
@@ -227,8 +212,6 @@ public class DailyForecastListActivity extends ListActivity {
                 break;
         }
     }
-
-//    Handle Location events
 
     /**
      * Call downloadCurrentWeatherData() when location determined
@@ -250,8 +233,6 @@ public class DailyForecastListActivity extends ListActivity {
         ).show();
         getForecastWeatherData();
     }
-
-//    Handle Network events
 
     /**
      * Trying to parse JSON data and build Forecast object. Call updateUi() when Forecast

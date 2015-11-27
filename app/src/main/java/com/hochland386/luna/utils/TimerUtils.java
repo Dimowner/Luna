@@ -7,35 +7,30 @@ import com.hochland386.luna.bus.TimerTimeoutEvent;
 import de.greenrobot.event.EventBus;
 
 /**
- *
  * Copyright 2015 Vitaly Sulimov <quarry386@fastmail.com>
- *
+ * <p/>
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- *
+ * <p/>
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
- *
+ * <p/>
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
  * MA 02110-1301, USA.
- *
  */
 public class TimerUtils {
 
-    //    Members
     private CountDownTimer mLocationTimer;
 
-    //    Make default constructor private
     private TimerUtils() {
     }
 
-    //    Implements getInstance() method
     public static TimerUtils getInstance() {
         return Loader.instance;
     }
@@ -51,7 +46,6 @@ public class TimerUtils {
                 Constants.getInstance().getCountDownInterval()) {
             @Override
             public void onTick(long millisUntilFinished) {
-//                Do nothing :)
             }
 
             @Override
@@ -62,8 +56,6 @@ public class TimerUtils {
         mLocationTimer.start();
     }
 
-//    Public interface
-
     /**
      * Cancel location timeout timer.
      */
@@ -73,7 +65,6 @@ public class TimerUtils {
         }
     }
 
-    //    Singleton wrapper
     private static class Loader {
         static TimerUtils instance = new TimerUtils();
     }
